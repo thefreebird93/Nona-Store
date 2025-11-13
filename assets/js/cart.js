@@ -1,5 +1,3 @@
-
-
 /* --- safety helpers inserted automatically ---
    safeGet(key) -> returns parsed JSON from localStorage or null safely
    sanitizeAndSet(key, obj) -> removes sensitive props (password, token) before storing
@@ -20,7 +18,6 @@ function sanitizeAndSet(key, obj){
       var copy = JSON.parse(JSON.stringify(obj));
       if(copy.password) delete copy.password;
       if(copy.token) {
-        // for client-only demo, don't store raw tokens; remove or shorten
         delete copy.token;
       }
       localStorage.setItem(key, JSON.stringify(copy));
@@ -34,9 +31,7 @@ function sanitizeAndSet(key, obj){
 function safeSetHTML(el, html){
   try{
     if(!el) return;
-    // basic sanitize: remove script tags
     var clean = String(html).replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
-    // if el is a selector string, try to resolve it
     try{
       if(typeof el === 'string'){
         var resolved = document.querySelector(el);
@@ -44,7 +39,6 @@ function safeSetHTML(el, html){
         return;
       }
     }catch(e){}
-    // otherwise assume element
     if(el && el.innerHTML !== undefined){
       el.innerHTML = clean;
     }
@@ -53,7 +47,6 @@ function safeSetHTML(el, html){
   }
 }
 /* --- end helpers --- */
-
 
 // Enhanced Cart Manager
 class CartManager {
@@ -86,7 +79,6 @@ class CartManager {
     }
 
     setupEventListeners() {
-        // Cart icon click
         const cartIcon = document.getElementById('cartIcon');
         if (cartIcon) {
             cartIcon.addEventListener('click', () => {
@@ -94,7 +86,6 @@ class CartManager {
             });
         }
 
-        // Close cart when clicking overlay
         document.addEventListener('click', (e) => {
             const cartSidebar = document.getElementById('cartSidebar');
             const cartIcon = document.getElementById('cartIcon');
@@ -106,7 +97,6 @@ class CartManager {
             }
         });
 
-        // Keyboard events
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeCartSidebar();
@@ -115,7 +105,6 @@ class CartManager {
     }
 
     createCartSidebar() {
-        // Create cart sidebar HTML if it doesn't exist
         if (!document.getElementById('cartSidebar')) {
             const cartSidebar = document.createElement('div');
             cartSidebar.id = 'cartSidebar';
@@ -165,7 +154,6 @@ class CartManager {
     }
 
     setupCartSidebarEvents() {
-        // Close cart button
         const closeCartBtn = document.querySelector('.close-cart');
         if (closeCartBtn) {
             closeCartBtn.addEventListener('click', () => {
@@ -173,7 +161,6 @@ class CartManager {
             });
         }
 
-        // Overlay click
         const overlay = document.getElementById('overlay');
         if (overlay) {
             overlay.addEventListener('click', () => {
@@ -181,7 +168,6 @@ class CartManager {
             });
         }
 
-        // Checkout button
         const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', () => {
@@ -207,7 +193,6 @@ class CartManager {
         this.updateCartUI();
         this.showNotification(`${product.name} added to cart!`, 'success');
         
-        // Open cart sidebar when adding items
         if (this.cart.length === 1) {
             this.toggleCartSidebar();
         }
@@ -245,7 +230,6 @@ class CartManager {
         this.updateCartCount();
         this.updateCartSidebar();
         
-        // Update main app if exists
         if (window.nonaBeautyApp) {
             window.nonaBeautyApp.updateCartUI();
         }
@@ -280,15 +264,12 @@ class CartManager {
         if (cartItems) cartItems.style.display = 'block';
         if (checkoutBtn) checkoutBtn.disabled = false;
 
-        // Update cart items
         safeSetHTML(cartItems, this.cart.map(item => this.createCartItemHTML(item)).join(''));
 
-        // Update total
         if (cartTotal) {
             cartTotal.textContent = this.formatPrice(this.calculateTotal());
         }
 
-        // Attach event listeners to cart items
         this.attachCartItemEventListeners();
     }
 
@@ -338,7 +319,6 @@ class CartManager {
     }
 
     attachCartItemEventListeners() {
-        // Decrease quantity buttons
         document.querySelectorAll('.quantity-btn.decrease').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const productId = e.target.closest('.quantity-btn').dataset.productId;
@@ -349,7 +329,6 @@ class CartManager {
             });
         });
 
-        // Increase quantity buttons
         document.querySelectorAll('.quantity-btn.increase').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const productId = e.target.closest('.quantity-btn').dataset.productId;
@@ -360,7 +339,6 @@ class CartManager {
             });
         });
 
-        // Remove item buttons
         document.querySelectorAll('.remove-item').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const productId = e.target.closest('.remove-item').dataset.productId;
@@ -416,21 +394,18 @@ class CartManager {
             return;
         }
 
-        // Check if user is logged in
         const currentUser = safeGet('nonaBeautyUser');
         
         if (!currentUser) {
             this.showNotification('Please login to proceed with checkout', 'warning');
             this.closeCartSidebar();
             
-            // Redirect to login page with return URL
             setTimeout(() => {
                 window.location.href = 'login.html?redirect=checkout';
             }, 1500);
             return;
         }
 
-        // Check if user has shipping address
         const hasAddress = currentUser.addresses && currentUser.addresses.length > 0;
         
         if (!hasAddress) {
@@ -443,7 +418,6 @@ class CartManager {
             return;
         }
 
-        // Create order
         const order = {
             id: 'ORD-' + Date.now(),
             items: [...this.cart],
@@ -459,20 +433,15 @@ class CartManager {
             shippingAddress: currentUser.addresses.find(addr => addr.isDefault) || currentUser.addresses[0],
             status: 'pending',
             createdAt: new Date().toISOString(),
-            estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days from now
+            estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
         };
 
-        // Save order
         this.saveOrder(order);
-
-        // Clear cart
         this.clearCart();
         this.closeCartSidebar();
 
-        // Show success message
         this.showNotification('Order placed successfully! Redirecting to order details...', 'success');
 
-        // Redirect to order confirmation
         setTimeout(() => {
             window.location.href = `order-confirmation.html?id=${order.id}`;
         }, 2000);
@@ -495,7 +464,7 @@ class CartManager {
     }
 
     formatPrice(price) {
-        return `${price} EGP`;
+        return `$${price.toFixed(2)}`;
     }
 
     showNotification(message, type = 'info') {
@@ -505,6 +474,22 @@ class CartManager {
             <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
             <span>${message}</span>
         `);
+
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#d63384'};
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 3000;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        `;
 
         document.body.appendChild(notification);
 
@@ -518,7 +503,6 @@ class CartManager {
         }, 3000);
     }
 
-    // Apply coupon code (placeholder for future implementation)
     applyCoupon(code) {
         const coupons = {
             'WELCOME10': { discount: 10, type: 'percentage', minAmount: 50 },
@@ -536,13 +520,47 @@ class CartManager {
             return null;
         }
     }
+
+    submitOrder(order) {
+        try {
+            var cfg = getConfig && getConfig();
+            var orderId = order.id || Date.now();
+            var emailData = {
+                order_id: orderId,
+                customer_name: order.customerName || order.name || 'Guest',
+                customer_email: order.email || '',
+                items: JSON.stringify(order.items || []),
+                total: order.total || '',
+                note: order.note || ''
+            };
+            
+            if (cfg && cfg.emailjs && cfg.emailjs.serviceId && cfg.emailjs.templateId && cfg.emailjs.userId) {
+                if (window.emailjs) { 
+                    emailjs.init({ publicKey: cfg.emailjs.userId }); 
+                    emailjs.send(cfg.emailjs.serviceId, cfg.emailjs.templateId, emailData).then(function(){}, function(err){console.error(err);}); 
+                }
+            }
+            
+            var wa = (cfg && cfg.socials && cfg.socials.whatsapp) ? cfg.socials.whatsapp : '01094004720';
+            var num = wa.replace(/^0/, ''); 
+            if (num.length > 0 && num[0] === '+') num = num.replace('+','');
+            var waLink = 'https://wa.me/2' + num + '?text=' + encodeURIComponent('New order: ' + orderId + '\nName: ' + emailData.customer_name + '\nTotal: ' + emailData.total);
+            window.open(waLink, '_blank');
+            
+            var orders = safeGet('nonaBeautyOrders') || [];
+            orders.push(order);
+            sanitizeAndSet('nonaBeautyOrders', orders);
+            alert('Order submitted. Admins notified.');
+        } catch(e) { 
+            console.error(e); 
+            alert('Order submission failed'); 
+        }
+    }
 }
 
-// Initialize cart manager
 document.addEventListener('DOMContentLoaded', function() {
     window.cartManager = new CartManager();
     
-    // Add cart styles if not already added
     if (!document.getElementById('cartStyles')) {
         const cartStyles = document.createElement('style');
         cartStyles.id = 'cartStyles';
@@ -760,34 +778,3 @@ document.addEventListener('DOMContentLoaded', function() {
         document.head.appendChild(cartStyles);
     }
 });
-[file content end]
-
-/* submitOrder - sends EmailJS email if configured and opens WhatsApp link */
-function submitOrder(order){
-  try{
-    var cfg = getConfig();
-    var orderId = order.id || Date.now();
-    var emailData = {
-      order_id: orderId,
-      customer_name: order.customerName || order.name || 'Guest',
-      customer_email: order.email || '',
-      items: JSON.stringify(order.items || []),
-      total: order.total || '',
-      note: order.note || ''
-    };
-    // send via EmailJS if configured
-    if(cfg && cfg.emailjs && cfg.emailjs.serviceId && cfg.emailjs.templateId && cfg.emailjs.userId){
-      if(window.emailjs){ emailjs.init({ publicKey: cfg.emailjs.userId }); emailjs.send(cfg.emailjs.serviceId, cfg.emailjs.templateId, emailData).then(function(){}, function(err){console.error(err);}); }
-    }
-    // WhatsApp notification
-    var wa = (cfg && cfg.socials && cfg.socials.whatsapp) ? cfg.socials.whatsapp : '01094004720';
-    var num = wa.replace(/^0/, ''); if(num.length>0 && num[0]==='+' ) num = num.replace('+','');
-    var waLink = 'https://wa.me/2' + num + '?text=' + encodeURIComponent('New order: ' + orderId + '\nName: ' + emailData.customer_name + '\nTotal: ' + emailData.total);
-    window.open(waLink, '_blank');
-    // save order
-    var orders = safeGet('nonaBeautyOrders') || [];
-    orders.push(order);
-    sanitizeAndSet('nonaBeautyOrders', orders);
-    alert('Order submitted. Admins notified.');
-  }catch(e){ console.error(e); alert('Order submission failed'); }
-}
