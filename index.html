@@ -3,423 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Nona Beauty</title>
-    <link rel="stylesheet" href="assets/css/admin.css">
+    <title>Nona Beauty - Premium Cosmetics Store</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .featured-categories, .featured-products, .special-offers {
+            padding: 60px 0;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .offer-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .offer-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .offer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--danger-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .offer-content {
+            padding: 20px;
+        }
+
+        .offer-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .offer-content p {
+            color: var(--muted-text);
+            margin-bottom: 15px;
+        }
+    </style>
     <script src="assets/js/helpers.js" defer></script>
     <script src="assets/js/translations.js" defer></script>
     <script src="assets/js/config.js" defer></script>
 </head>
-<body>
+<body class="english">
+    <!-- Loading Screen -->
+    <div class="loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+    </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  try{
-    var u = (window.Auth && window.Auth.getUser) ? window.Auth.getUser() : { type: localStorage.getItem('userType') };
-    if(!u || u.type !== 'admin'){
-      alert('غير مصرح. يجب تسجيل الدخول كأدمن.');
-      location.href = 'login.html';
-    }
-  }catch(e){ console.error(e); }
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  try{
-    var user = safeGet('nonaBeautyUser');
-    if(!user || !user.role || user.role !== 'admin'){
-      window.location.replace('index.html');
-    }
-  }catch(e){
-    console.error('admin guard', e);
-    window.location.replace('index.html');
-  }
-});
-</script>
-
-    <div class="admin-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <img src="assets/images/general/logo.png" alt="Admin Dashboard" class="admin-logo">
-                <h2>Admin Dashboard</h2>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <ul>
-                    <li class="nav-item active">
-                        <a href="#dashboard" class="nav-link">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#products" class="nav-link">
-                            <i class="fas fa-box"></i>
-                            <span>Products</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#categories" class="nav-link">
-                            <i class="fas fa-tags"></i>
-                            <span>Categories</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#orders" class="nav-link">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>Orders</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#customers" class="nav-link">
-                            <i class="fas fa-users"></i>
-                            <span>Customers</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#offers" class="nav-link">
-                            <i class="fas fa-percentage"></i>
-                            <span>Offers & Discounts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#blog" class="nav-link">
-                            <i class="fas fa-blog"></i>
-                            <span>Blog & Tips</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#settings" class="nav-link">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="sidebar-footer">
-                <a href="index.html" class="back-to-store">
-                    <i class="fas fa-store"></i>
-                    <span>Back to Store</span>
-                </a>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main>
-            <div id="admin-content" class="main-content">
-                <!-- Header -->
-                <header class="admin-header">
-                    <div class="header-left">
-                        <button class="sidebar-toggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <h1 id="pageTitle">Dashboard</h1>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">NB</div>
+                    <div class="logo-text">
+                        <h1>Nona Beauty</h1>
+                        <p>Your Beauty Passion</p>
                     </div>
-                    
-                    <div class="header-right">
-                        <div class="admin-search">
-                            <input type="text" placeholder="Search..." id="adminSearch">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        
-                        <div class="admin-profile">
-                            <div class="profile-dropdown">
-                                <img src="assets/images/general/admin-avatar.jpg" alt="Admin" class="profile-img">
-                                <span>Admin User</span>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html" class="nav-link active">Home</a></li>
+                        <li><a href="products.html" class="nav-link">Products</a></li>
+                        <li><a href="offers.html" class="nav-link">Offers</a></li>
+                        <li><a href="tips.html" class="nav-link">Beauty Tips</a></li>
+                        <li><a href="about.html" class="nav-link">About Us</a></li>
+                        <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                    <button id="lang-toggle" style="margin-left:10px;padding:6px 10px;border-radius:6px;">ع/En</button>
+                </nav>
+                
+                <div class="header-actions">
+                    <div id="nav-icons" style="display:inline-block;margin-left:12px"></div>
+                    <div class="user-actions">
+                        <a href="login.html" class="auth-btn login-btn" id="loginBtn">Login</a>
+                        <a href="login.html" class="auth-btn register-btn" id="registerBtn">Register</a>
+                        <div class="user-menu" id="userMenu" style="display: none;">
+                            <button class="user-profile-btn">
+                                <i class="fas fa-user"></i>
+                                <span id="userName">User</span>
                                 <i class="fas fa-chevron-down"></i>
-                                
-                                <div class="dropdown-menu">
-                                    <a href="#profile"><i class="fas fa-user"></i> Profile</a>
-                                    <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
-                                    <a href="#" id="adminLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                                </div>
+                            </button>
+                            <div class="user-dropdown">
+                                <a href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a>
+                                <a href="profile.html#orders"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                                <a href="profile.html#addresses"><i class="fas fa-map-marker-alt"></i> Shipping Addresses</a>
+                                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                             </div>
                         </div>
                     </div>
-                </header>
-
-                <!-- Content Area -->
-                <div class="content-area">
-                    <!-- Dashboard Page -->
-                    <section id="dashboard" class="page active">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-icon sales">
-                                    <i class="fas fa-dollar-sign"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3>Total Sales</h3>
-                                    <span class="stat-number">$12,458</span>
-                                    <span class="stat-change positive">+12%</span>
-                                </div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon orders">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3>Total Orders</h3>
-                                    <span class="stat-number">156</span>
-                                    <span class="stat-change positive">+8%</span>
-                                </div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon customers">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3>Total Customers</h3>
-                                    <span class="stat-number">2,458</span>
-                                    <span class="stat-change positive">+15%</span>
-                                </div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon products">
-                                    <i class="fas fa-box"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3>Total Products</h3>
-                                    <span class="stat-number">89</span>
-                                    <span class="stat-change positive">+5%</span>
-                                </div>
-                            </div>
+                    <div class="header-icons">
+                        <div class="wishlist-icon" id="wishlistIcon">
+                            <i class="far fa-heart"></i>
+                            <span class="wishlist-count">0</span>
                         </div>
-
-                        <div class="charts-section">
-                            <div class="chart-card">
-                                <h3>Sales Overview</h3>
-                                <div class="chart-container">
-                                    <canvas id="salesChart"></canvas>
-                                </div>
-                            </div>
-                            
-                            <div class="chart-card">
-                                <h3>Top Selling Products</h3>
-                                <div class="top-products" id="topProducts">
-                                    <div class="product-rank">
-                                        <span class="rank">1</span>
-                                        <div class="product-info">
-                                            <span class="product-name">Hydrating Face Serum</span>
-                                            <span class="product-sales">89 sales</span>
-                                        </div>
-                                        <span class="product-revenue">$31,150</span>
-                                    </div>
-                                    <div class="product-rank">
-                                        <span class="rank">2</span>
-                                        <div class="product-info">
-                                            <span class="product-name">Sulfate-Free Shampoo</span>
-                                            <span class="product-sales">76 sales</span>
-                                        </div>
-                                        <span class="product-revenue">$12,920</span>
-                                    </div>
-                                    <div class="product-rank">
-                                        <span class="rank">3</span>
-                                        <div class="product-info">
-                                            <span class="product-name">Floral Elegance Perfume</span>
-                                            <span class="product-sales">64 sales</span>
-                                        </div>
-                                        <span class="product-revenue">$25,600</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
                         </div>
-
-                        <div class="recent-activity">
-                            <h3>Recent Orders</h3>
-                            <div class="activity-table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Customer</th>
-                                            <th>Date</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="recentOrdersTable">
-                                        <tr>
-                                            <td>ORD-001</td>
-                                            <td>John Doe</td>
-                                            <td>2024-01-15</td>
-                                            <td>$156.00</td>
-                                            <td><span class="status-badge status-delivered">Delivered</span></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary">View</button>
-                                                <button class="btn btn-sm btn-secondary">Edit</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>ORD-002</td>
-                                            <td>Sarah Smith</td>
-                                            <td>2024-01-14</td>
-                                            <td>$89.50</td>
-                                            <td><span class="status-badge status-shipped">Shipped</span></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary">View</button>
-                                                <button class="btn btn-sm btn-secondary">Edit</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Products Management Page -->
-                    <section id="products" class="page">
-                        <div class="page-header">
-                            <h2>Products Management</h2>
-                            <button class="btn btn-primary" id="addProductBtn">
-                                <i class="fas fa-plus"></i>
-                                Add New Product
-                            </button>
-                        </div>
-
-                        <div class="products-management">
-                            <div class="products-filters">
-                                <select id="categoryFilter">
-                                    <option value="all">All Categories</option>
-                                    <option value="hair">Hair Care</option>
-                                    <option value="face">Skin Care</option>
-                                    <option value="lips">Lip Products</option>
-                                    <option value="body">Body Care</option>
-                                    <option value="perfumes">Perfumes</option>
-                                </select>
-                                
-                                <select id="statusFilter">
-                                    <option value="all">All Status</option>
-                                    <option value="inStock">In Stock</option>
-                                    <option value="outOfStock">Out of Stock</option>
-                                    <option value="onSale">On Sale</option>
-                                </select>
-                                
-                                <button class="btn btn-secondary" id="exportProducts">
-                                    <i class="fas fa-download"></i>
-                                    Export
-                                </button>
-                            </div>
-
-                            <div class="products-table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Product Name</th>
-                                            <th>Category</th>
-                                            <th>Price</th>
-                                            <th>Discount</th>
-                                            <th>Stock</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="productsTable">
-                                        <tr>
-                                            <td>
-                                                <img src="https://images.unsplash.com/photo-1625772299848-391b6a87d5b6?w=100" alt="Shampoo" class="product-image-small">
-                                            </td>
-                                            <td>Sulfate-Free Shampoo</td>
-                                            <td>Hair Care</td>
-                                            <td>$170</td>
-                                            <td>15%</td>
-                                            <td>45</td>
-                                            <td><span class="status-badge status-in-stock">In Stock</span></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Categories Page -->
-                    <section id="categories" class="page">
-                        <div class="page-header">
-                            <h2>Categories Management</h2>
-                            <button class="btn btn-primary">
-                                <i class="fas fa-plus"></i>
-                                Add New Category
-                            </button>
-                        </div>
-                        <div class="categories-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Category Name</th>
-                                        <th>Product Count</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="categoriesTable">
-                                    <!-- Categories will be loaded here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-                    <!-- Additional pages can be added here -->
+                    </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </header>
 
-    <!-- Modals -->
-    <div class="modal" id="addProductModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Add New Product</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="productForm">
-                    <div class="form-group">
-                        <label for="productName">Product Name</label>
-                        <input type="text" id="productName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="productCategory">Category</label>
-                        <select id="productCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="hair">Hair Care</option>
-                            <option value="face">Skin Care</option>
-                            <option value="lips">Lip Products</option>
-                            <option value="body">Body Care</option>
-                            <option value="perfumes">Perfumes</option>
-                        </select>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="productPrice">Price</label>
-                            <input type="number" id="productPrice" step="0.01" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="productStock">Stock</label>
-                            <input type="number" id="productStock" required>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary cancel-btn">Cancel</button>
-                <button class="btn btn-primary" id="saveProduct">Save Product</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Your Beauty Deserves the Best</h2>
+                <p>Discover our premium collection of skin and hair care products, specially designed to meet your beauty needs</p>
+                <div class="hero-buttons">
+                    <a href="products.html" class="btn btn-primary">Shop Now</a>
+                    <a href="offers.html" class="btn btn-outline">Current Offers</a>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script src="assets/js/admin.js"></script>
-    <script src="assets/js/admin-enhanced.js" defer></script>
+    <!-- Featured Categories -->
+    <section class="featured-categories">
+        <div class="container">
+            <h2 class="section-title">Product Categories</h2>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Best Sellers</h2>
+            <div class="products-grid" id="featuredProducts">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="products.html" class="btn btn-primary">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="special-offers">
+        <div class="container">
+            <h2 class="section-title">Special Offers</h2>
+            <div class="offers-grid" id="specialOffers">
+                <!-- Offers will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Nona Beauty</h3>
+                    <p>Your trusted partner in beauty and skincare. We provide high-quality products for your beauty journey.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="offers.html">Offers</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> info@nonabeauty.com</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Beauty Street, NY 10001</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Nona Beauty. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/main.js"></script>
+    <script>
+        // تحميل المحتوى الديناميكي للصفحة الرئيسية
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحميل الفئات
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            if (categoriesGrid) {
+                const categories = [
+                    { id: 'hair', name: 'Hair Care', icon: 'fas fa-air-freshener', description: 'Shampoo, conditioner, hair masks and oils' },
+                    { id: 'face', name: 'Skin Care', icon: 'fas fa-gem', description: 'Cleansers, toners, serums and creams' },
+                    { id: 'lips', name: 'Lip Products', icon: 'fas fa-kiss-wink-heart', description: 'Lip gloss, lip balm and lipstick' },
+                    { id: 'body', name: 'Body Care', icon: 'fas fa-spa', description: 'Shower gel, scrubs, lotion and body butter' },
+                    { id: 'perfumes', name: 'Perfumes', icon: 'fas fa-wind', description: 'Elegant fragrances for every occasion' }
+                ];
+
+                safeSetHTML(categoriesGrid, categories.map(category => `
+                    <div class="category-card" data-category="${category.id}">
+                        <div class="category-icon">
+                            <i class="${category.icon}"></i>
+                        </div>
+                        <h3>${category.name}</h3>
+                        <p>${category.description}</p>
+                    </div>
+                `).join(''));
+
+                // إضافة أحداث النقر على الفئات
+                document.querySelectorAll('.category-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const category = card.dataset.category;
+                        window.location.href = `products.html?category=${category}`;
+                    });
+                });
+            }
+
+            // تحميل المنتجات المميزة
+            const featuredProducts = document.getElementById('featuredProducts');
+            if (featuredProducts && window.nonaBeautyApp) {
+                const featured = window.nonaBeautyApp.products.filter(p => p.featured).slice(0, 6);
+                safeSetHTML(featuredProducts, featured.map(product => 
+                    window.nonaBeautyApp.createProductCard(product)
+                ).join(''));
+                window.nonaBeautyApp.attachProductEventListeners();
+            }
+
+            // تحميل العروض الخاصة
+            const specialOffers = document.getElementById('specialOffers');
+            if (specialOffers && window.nonaBeautyApp) {
+                const offers = window.nonaBeautyApp.getDiscountedProducts().slice(0, 3);
+                safeSetHTML(specialOffers, offers.map(offer => `
+                    <div class="offer-card">
+                        <div class="offer-image">
+                            <img src="${offer.image}" alt="${offer.name}">
+                            <div class="offer-badge">${offer.discount}% OFF</div>
+                        </div>
+                        <div class="offer-content">
+                            <h3>${offer.name}</h3>
+                            <p>${offer.description}</p>
+                            <div class="product-price">
+                                <span class="current-price">${window.nonaBeautyApp.formatPrice(offer.price)}</span>
+                                <span class="original-price">${window.nonaBeautyApp.formatPrice(offer.originalPrice)}</span>
+                            </div>
+                            <a href="offers.html?product=${offer.id}" class="btn btn-primary">View Offer</a>
+                        </div>
+                    </div>
+                `).join(''));
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){ 
+            try{ 
+                var cfg = getConfig && getConfig(); 
+                var publicKey = cfg && cfg.emailjs && (cfg.emailjs.userId || cfg.emailjs.publicKey); 
+                if(publicKey && window.emailjs){ 
+                    emailjs.init({ publicKey: publicKey }); 
+                } 
+            } catch(e){ 
+                console.error("EmailJS init error", e); 
+            } 
+        })();
+    </script>
     <script src="assets/js/auth.js" defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            try{
+                var u = (window.Auth && window.Auth.getUser) ? window.Auth.getUser() : { type: localStorage.getItem('userType'), email: localStorage.getItem('userEmail') };
+                var container = document.getElementById('nav-icons');
+                if(!container){
+                    container = document.createElement('div'); 
+                    container.id='nav-icons'; 
+                    document.body.prepend(container);
+                }
+                container.innerHTML = '';
+                if(u && u.type === 'admin'){
+                    var a = document.createElement('a'); 
+                    a.href='admin.html'; 
+                    a.title='لوحة التحكم'; 
+                    a.innerHTML = '<i class="fas fa-graduation-cap"></i>';
+                    container.appendChild(a);
+                } else if(u && u.type === 'user'){
+                    var p = document.createElement('a'); 
+                    p.href='profile.html'; 
+                    p.title='الملف الشخصي'; 
+                    p.innerHTML = '<i class="fas fa-user"></i>';
+                    container.appendChild(p);
+                } else {
+                    var l = document.createElement('a'); 
+                    l.href='login.html'; 
+                    l.title='تسجيل الدخول'; 
+                    l.innerHTML = '<i class="fas fa-sign-in-alt"></i>'; 
+                    container.appendChild(l);
+                }
+            } catch(e){ 
+                console.error(e); 
+            }
+        });
+    </script>
+
 </body>
 </html>
