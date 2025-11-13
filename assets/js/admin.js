@@ -1,5 +1,3 @@
-
-
 /* --- safety helpers inserted automatically ---
    safeGet(key) -> returns parsed JSON from localStorage or null safely
    sanitizeAndSet(key, obj) -> removes sensitive props (password, token) before storing
@@ -20,7 +18,6 @@ function sanitizeAndSet(key, obj){
       var copy = JSON.parse(JSON.stringify(obj));
       if(copy.password) delete copy.password;
       if(copy.token) {
-        // for client-only demo, don't store raw tokens; remove or shorten
         delete copy.token;
       }
       localStorage.setItem(key, JSON.stringify(copy));
@@ -34,9 +31,7 @@ function sanitizeAndSet(key, obj){
 function safeSetHTML(el, html){
   try{
     if(!el) return;
-    // basic sanitize: remove script tags
     var clean = String(html).replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
-    // if el is a selector string, try to resolve it
     try{
       if(typeof el === 'string'){
         var resolved = document.querySelector(el);
@@ -44,7 +39,6 @@ function safeSetHTML(el, html){
         return;
       }
     }catch(e){}
-    // otherwise assume element
     if(el && el.innerHTML !== undefined){
       el.innerHTML = clean;
     }
@@ -53,7 +47,6 @@ function safeSetHTML(el, html){
   }
 }
 /* --- end helpers --- */
-
 
 class AdminPanel {
     constructor() {
@@ -85,7 +78,6 @@ class AdminPanel {
     }
 
     loadData() {
-        // Load products
         const savedProducts = localStorage.getItem('nonaBeautyProducts');
         if (savedProducts) {
             this.products = JSON.parse(savedProducts);
@@ -93,7 +85,6 @@ class AdminPanel {
             this.loadDefaultProducts();
         }
 
-        // Load orders
         const savedOrders = localStorage.getItem('nonaBeautyOrders');
         if (savedOrders) {
             this.orders = JSON.parse(savedOrders);
@@ -101,7 +92,6 @@ class AdminPanel {
             this.orders = [];
         }
 
-        // Load customers
         const savedCustomers = localStorage.getItem('nonaBeautyUsers');
         if (savedCustomers) {
             this.customers = JSON.parse(savedCustomers).filter(user => user.role === 'customer');
@@ -109,7 +99,6 @@ class AdminPanel {
             this.customers = [];
         }
 
-        // Load offers
         const savedOffers = localStorage.getItem('nonaBeautyOffers');
         if (savedOffers) {
             this.offers = JSON.parse(savedOffers);
@@ -117,7 +106,6 @@ class AdminPanel {
             this.offers = [];
         }
 
-        // Load tips
         const savedTips = localStorage.getItem('nonaBeautyTips');
         if (savedTips) {
             this.tips = JSON.parse(savedTips);
@@ -196,7 +184,6 @@ class AdminPanel {
     }
 
     setupEventListeners() {
-        // Search functionality
         const adminSearch = document.getElementById('adminSearch');
         if (adminSearch) {
             adminSearch.addEventListener('input', (e) => {
@@ -204,7 +191,6 @@ class AdminPanel {
             });
         }
 
-        // Sidebar toggle for mobile
         const sidebarToggle = document.querySelector('.sidebar-toggle');
         if (sidebarToggle) {
             sidebarToggle.addEventListener('click', () => {
@@ -212,7 +198,6 @@ class AdminPanel {
             });
         }
 
-        // Logout
         const adminLogoutBtn = document.getElementById('adminLogout');
         if (adminLogoutBtn) {
             adminLogoutBtn.addEventListener('click', (e) => {
@@ -221,7 +206,6 @@ class AdminPanel {
             });
         }
 
-        // Export buttons
         const exportProductsBtn = document.getElementById('exportProducts');
         if (exportProductsBtn) {
             exportProductsBtn.addEventListener('click', () => {
@@ -238,7 +222,6 @@ class AdminPanel {
     }
 
     setupNavigation() {
-        // Navigation links
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -247,7 +230,6 @@ class AdminPanel {
             });
         });
 
-        // Add Product Button
         const addProductBtn = document.getElementById('addProductBtn');
         if (addProductBtn) {
             addProductBtn.addEventListener('click', () => {
@@ -255,7 +237,6 @@ class AdminPanel {
             });
         }
 
-        // Add Offer Button
         const addOfferBtn = document.getElementById('addOfferBtn');
         if (addOfferBtn) {
             addOfferBtn.addEventListener('click', () => {
@@ -263,7 +244,6 @@ class AdminPanel {
             });
         }
 
-        // Add Tip Button
         const addTipBtn = document.getElementById('addTipBtn');
         if (addTipBtn) {
             addTipBtn.addEventListener('click', () => {
@@ -271,22 +251,17 @@ class AdminPanel {
             });
         }
 
-        // Modal Controls
         this.setupModalEvents();
-        
-        // Filter events
         this.setupFilterEvents();
     }
 
     setupModalEvents() {
-        // Close modal buttons
         document.querySelectorAll('.close-modal').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.closeModal();
             });
         });
 
-        // Save Product
         const saveProductBtn = document.getElementById('saveProduct');
         if (saveProductBtn) {
             saveProductBtn.addEventListener('click', () => {
@@ -294,7 +269,6 @@ class AdminPanel {
             });
         }
 
-        // Save Offer
         const saveOfferBtn = document.getElementById('saveOffer');
         if (saveOfferBtn) {
             saveOfferBtn.addEventListener('click', () => {
@@ -302,7 +276,6 @@ class AdminPanel {
             });
         }
 
-        // Save Tip
         const saveTipBtn = document.getElementById('saveTip');
         if (saveTipBtn) {
             saveTipBtn.addEventListener('click', () => {
@@ -310,14 +283,12 @@ class AdminPanel {
             });
         }
 
-        // Cancel buttons
         document.querySelectorAll('.cancel-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.closeModal();
             });
         });
 
-        // Close on overlay click
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
@@ -326,7 +297,6 @@ class AdminPanel {
             });
         });
 
-        // Keyboard events
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeModal();
@@ -335,7 +305,6 @@ class AdminPanel {
     }
 
     setupFilterEvents() {
-        // Products filters
         const categoryFilter = document.getElementById('categoryFilter');
         if (categoryFilter) {
             categoryFilter.addEventListener('change', () => {
@@ -350,7 +319,6 @@ class AdminPanel {
             });
         }
 
-        // Orders filters
         const orderStatusFilter = document.getElementById('orderStatusFilter');
         if (orderStatusFilter) {
             orderStatusFilter.addEventListener('change', () => {
@@ -358,7 +326,6 @@ class AdminPanel {
             });
         }
 
-        // Customers filters
         const customerStatusFilter = document.getElementById('customerStatusFilter');
         if (customerStatusFilter) {
             customerStatusFilter.addEventListener('change', () => {
@@ -375,18 +342,15 @@ class AdminPanel {
     }
 
     showPage(page) {
-        // Hide all pages
         document.querySelectorAll('.page').forEach(pageEl => {
             pageEl.classList.remove('active');
         });
 
-        // Show selected page
         const targetPage = document.getElementById(page);
         if (targetPage) {
             targetPage.classList.add('active');
         }
 
-        // Update active nav link
         document.querySelectorAll('.nav-link').forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === `#${page}`) {
@@ -394,18 +358,14 @@ class AdminPanel {
             }
         });
 
-        // Update page title
         const pageTitle = document.getElementById('pageTitle');
         if (pageTitle) {
             pageTitle.textContent = this.getPageTitle(page);
         }
 
-        // Load page-specific content
         this.loadPageContent(page);
-
         this.currentPage = page;
         
-        // Close sidebar on mobile after navigation
         if (window.innerWidth <= 768) {
             this.toggleSidebar();
         }
@@ -472,7 +432,6 @@ class AdminPanel {
             productsChange: '+5%'
         };
 
-        // Update stats cards
         this.updateStatCard('sales', stats.totalSales, stats.salesChange);
         this.updateStatCard('orders', stats.totalOrders, stats.ordersChange);
         this.updateStatCard('customers', stats.totalCustomers, stats.customersChange);
@@ -505,7 +464,6 @@ class AdminPanel {
         const ctx = document.getElementById('salesChart');
         if (!ctx) return;
 
-        // Sample data - in real app, this would come from API
         const data = {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
@@ -519,7 +477,6 @@ class AdminPanel {
             }]
         };
 
-        // Destroy existing chart if it exists
         if (this.salesChart) {
             this.salesChart.destroy();
         }
@@ -565,7 +522,6 @@ class AdminPanel {
         const topProductsContainer = document.getElementById('topProducts');
         if (!topProductsContainer) return;
 
-        // Get top products by sales (simulated)
         const topProducts = this.products.slice(0, 5).map((product, index) => ({
             ...product,
             sales: Math.floor(Math.random() * 100) + 50
@@ -870,7 +826,6 @@ class AdminPanel {
     }
 
     loadSettings() {
-        // Load settings form data
         const storeName = document.getElementById('storeName');
         const storeEmail = document.getElementById('storeEmail');
         const storePhone = document.getElementById('storePhone');
@@ -882,7 +837,6 @@ class AdminPanel {
         if (storeAddress) storeAddress.value = '123 Beauty Street, New York, NY 10001';
     }
 
-    // Product Management
     openAddProductModal() {
         this.openModal('addProductModal');
         this.resetProductForm();
@@ -903,7 +857,6 @@ class AdminPanel {
         if (!form) return;
 
         const productId = document.getElementById('productId').value;
-        const formData = new FormData(form);
         
         const productData = {
             id: productId || 'product_' + Date.now(),
@@ -926,13 +879,11 @@ class AdminPanel {
         };
 
         if (productId) {
-            // Update existing product
             const index = this.products.findIndex(p => p.id === productId);
             if (index !== -1) {
                 this.products[index] = { ...this.products[index], ...productData };
             }
         } else {
-            // Add new product
             this.products.push(productData);
         }
 
@@ -947,7 +898,6 @@ class AdminPanel {
         if (product) {
             this.openModal('addProductModal');
             
-            // Populate form with product data
             document.getElementById('productId').value = product.id;
             document.getElementById('productName').value = product.name;
             document.getElementById('productCategory').value = product.category;
@@ -976,7 +926,6 @@ class AdminPanel {
         }
     }
 
-    // Offer Management
     openAddOfferModal() {
         this.openModal('addOfferModal');
         this.resetOfferForm();
@@ -1015,13 +964,11 @@ class AdminPanel {
         };
 
         if (offerId) {
-            // Update existing offer
             const index = this.offers.findIndex(o => o.id === offerId);
             if (index !== -1) {
                 this.offers[index] = { ...this.offers[index], ...offerData };
             }
         } else {
-            // Add new offer
             this.offers.push(offerData);
         }
 
@@ -1036,7 +983,6 @@ class AdminPanel {
         if (offer) {
             this.openModal('addOfferModal');
             
-            // Populate form with offer data
             document.getElementById('offerId').value = offer.id;
             document.getElementById('offerTitle').value = offer.title;
             document.getElementById('offerDescription').value = offer.description;
@@ -1064,7 +1010,6 @@ class AdminPanel {
         }
     }
 
-    // Tip Management
     openAddTipModal() {
         this.openModal('addTipModal');
         this.resetTipForm();
@@ -1101,13 +1046,11 @@ class AdminPanel {
         };
 
         if (tipId) {
-            // Update existing tip
             const index = this.tips.findIndex(t => t.id === tipId);
             if (index !== -1) {
                 this.tips[index] = { ...this.tips[index], ...tipData };
             }
         } else {
-            // Add new tip
             this.tips.push(tipData);
         }
 
@@ -1122,7 +1065,6 @@ class AdminPanel {
         if (tip) {
             this.openModal('addTipModal');
             
-            // Populate form with tip data
             document.getElementById('tipId').value = tip.id;
             document.getElementById('tipTitle').value = tip.title;
             document.getElementById('tipExcerpt').value = tip.excerpt;
@@ -1149,7 +1091,6 @@ class AdminPanel {
         }
     }
 
-    // Utility Methods
     openModal(modalId) {
         const modal = document.getElementById(modalId);
         if (modal) {
@@ -1410,7 +1351,6 @@ class AdminPanel {
         const order = this.orders.find(o => o.id === orderId);
         if (order) {
             this.showNotification(`Viewing order: ${orderId}`, 'info');
-            // In a real app, you would show order details in a modal or separate page
         }
     }
 
@@ -1418,7 +1358,6 @@ class AdminPanel {
         const order = this.orders.find(o => o.id === orderId);
         if (order) {
             this.showNotification(`Editing order: ${orderId}`, 'info');
-            // In a real app, you would open an order edit form
         }
     }
 
@@ -1438,7 +1377,6 @@ class AdminPanel {
     }
 
     showNotification(message, type = 'info') {
-        // Remove existing notifications
         document.querySelectorAll('.admin-notification').forEach(notification => {
             notification.remove();
         });
@@ -1450,7 +1388,6 @@ class AdminPanel {
             <span>${message}</span>
         `);
 
-        // Add styles
         notification.style.cssText = `
             position: fixed;
             top: 100px;
@@ -1481,7 +1418,6 @@ class AdminPanel {
     }
 }
 
-// Initialize admin panel when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     window.adminPanel = new AdminPanel();
 });
