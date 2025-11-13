@@ -1,0 +1,1 @@
+Admin: use Admin Panel to update socials, admins, and EmailJS settings.

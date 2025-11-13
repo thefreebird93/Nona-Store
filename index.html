@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nona Beauty - Premium Cosmetics Store</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .featured-categories, .featured-products, .special-offers {
+            padding: 60px 0;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .offer-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .offer-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .offer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--danger-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .offer-content {
+            padding: 20px;
+        }
+
+        .offer-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .offer-content p {
+            color: var(--muted-text);
+            margin-bottom: 15px;
+        }
+    </style>
+    <script src="assets/js/helpers.js" defer></script>
+    <script src="assets/js/helpers.js" defer></script>\n    <script src="assets/js/translations.js" defer></script>\n    <script src="assets/js/config.js" defer></script>\n</head>
+<body class="english">
+    <!-- Loading Screen -->
+    <div class="loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">NB</div>
+                    <div class="logo-text">
+                        <h1>Nona Beauty</h1>
+                        <p>Your Beauty Passion</p>
+                    </div>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html" class="nav-link active">Home</a></li>
+                        <li><a href="products.html" class="nav-link">Products</a></li>
+                        <li><a href="offers.html" class="nav-link">Offers</a></li>
+                        <li><a href="tips.html" class="nav-link">Beauty Tips</a></li>
+                        <li><a href="about.html" class="nav-link">About Us</a></li>
+                        <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                  <button id="lang-toggle" style="margin-left:10px;padding:6px 10px;border-radius:6px;">ع/En</button>\n</nav>
+                
+                <div class="header-actions"><div id="nav-icons" style="display:inline-block;margin-left:12px"></div>
+                    <div class="user-actions">
+                        <a href="login.html" class="auth-btn login-btn" id="loginBtn">Login</a>
+                        <a href="login.html" class="auth-btn register-btn" id="registerBtn">Register</a>
+                        <div class="user-menu" id="userMenu" style="display: none;">
+                            <button class="user-profile-btn">
+                                <i class="fas fa-user"></i>
+                                <span id="userName">User</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="user-dropdown">
+                                <a href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a>
+                                <a href="profile.html#orders"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                                <a href="profile.html#addresses"><i class="fas fa-map-marker-alt"></i> Shipping Addresses</a>
+                                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-icons">
+                        <div class="wishlist-icon" id="wishlistIcon">
+                            <i class="far fa-heart"></i>
+                            <span class="wishlist-count">0</span>
+                        </div>
+                        <div class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Your Beauty Deserves the Best</h2>
+                <p>Discover our premium collection of skin and hair care products, specially designed to meet your beauty needs</p>
+                <div class="hero-buttons">
+                    <a href="products.html" class="btn btn-primary">Shop Now</a>
+                    <a href="offers.html" class="btn btn-outline">Current Offers</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="featured-categories">
+        <div class="container">
+            <h2 class="section-title">Product Categories</h2>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Best Sellers</h2>
+            <div class="products-grid" id="featuredProducts">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="products.html" class="btn btn-primary">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="special-offers">
+        <div class="container">
+            <h2 class="section-title">Special Offers</h2>
+            <div class="offers-grid" id="specialOffers">
+                <!-- Offers will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Nona Beauty</h3>
+                    <p>Your trusted partner in beauty and skincare. We provide high-quality products for your beauty journey.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="offers.html">Offers</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> info@nonabeauty.com</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Beauty Street, NY 10001</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Nona Beauty. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/main.js"></script>
+    <script>
+        // تحميل المحتوى الديناميكي للصفحة الرئيسية
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحميل الفئات
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            if (categoriesGrid) {
+                const categories = [
+                    { id: 'hair', name: 'Hair Care', icon: 'fas fa-air-freshener', description: 'Shampoo, conditioner, hair masks and oils' },
+                    { id: 'face', name: 'Skin Care', icon: 'fas fa-gem', description: 'Cleansers, toners, serums and creams' },
+                    { id: 'lips', name: 'Lip Products', icon: 'fas fa-kiss-wink-heart', description: 'Lip gloss, lip balm and lipstick' },
+                    { id: 'body', name: 'Body Care', icon: 'fas fa-spa', description: 'Shower gel, scrubs, lotion and body butter' },
+                    { id: 'perfumes', name: 'Perfumes', icon: 'fas fa-wind', description: 'Elegant fragrances for every occasion' }
+                ];
+
+                safeSetHTML(categoriesGrid, categories.map(category => `
+                    <div class="category-card" data-category="${category.id}">
+                        <div class="category-icon">
+                            <i class="${category.icon}"></i>
+                        </div>
+                        <h3>${category.name}</h3>
+                        <p>${category.description}</p>
+                    </div>
+                `).join(''));
+
+                // إضافة أحداث النقر على الفئات
+                document.querySelectorAll('.category-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const category = card.dataset.category;
+                        window.location.href = `products.html?category=${category}`;
+                    });
+                });
+            }
+
+            // تحميل المنتجات المميزة
+            const featuredProducts = document.getElementById('featuredProducts');
+            if (featuredProducts && window.nonaBeautyApp) {
+                const featured = window.nonaBeautyApp.products.filter(p => p.featured).slice(0, 6);
+                safeSetHTML(featuredProducts, featured.map(product => 
+                    window.nonaBeautyApp.createProductCard(product)
+                ).join(''));
+                window.nonaBeautyApp.attachProductEventListeners();
+            }
+
+            // تحميل العروض الخاصة
+            const specialOffers = document.getElementById('specialOffers');
+            if (specialOffers && window.nonaBeautyApp) {
+                const offers = window.nonaBeautyApp.getDiscountedProducts().slice(0, 3);
+                safeSetHTML(specialOffers, offers.map(offer => `
+                    <div class="offer-card">
+                        <div class="offer-image">
+                            <img src="${offer.image}" alt="${offer.name}">
+                            <div class="offer-badge">${offer.discount}% OFF</div>
+                        </div>
+                        <div class="offer-content">
+                            <h3>${offer.name}</h3>
+                            <p>${offer.description}</p>
+                            <div class="product-price">
+                                <span class="current-price">${window.nonaBeautyApp.formatPrice(offer.price)}</span>
+                                <span class="original-price">${window.nonaBeautyApp.formatPrice(offer.originalPrice)}</span>
+                            </div>
+                            <a href="offers.html?product=${offer.id}" class="btn btn-primary">View Offer</a>
+                        </div>
+                    </div>
+                `).join(''));
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>\n
+<script type="text/javascript">
+  (function(){ try{ var cfg = getConfig && getConfig(); var publicKey = cfg && cfg.emailjs && (cfg.emailjs.userId || cfg.emailjs.publicKey); if(publicKey && window.emailjs){ emailjs.init({ publicKey: publicKey }); } }catch(e){ console.error("EmailJS init error", e); } })();
+</script>
+<script src="assets/js/auth.js" defer></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try{
+    var u = (window.Auth && window.Auth.getUser) ? window.Auth.getUser() : { type: localStorage.getItem('userType'), email: localStorage.getItem('userEmail') };
+    var container = document.getElementById('nav-icons');
+    if(!container){
+      // create a small floating container
+      container = document.createElement('div'); container.id='nav-icons'; document.body.prepend(container);
+    }
+    container.innerHTML = '';
+    if(u && u.type === 'admin'){
+      var a = document.createElement('a'); a.href='admin.html'; a.title='لوحة التحكم'; a.innerHTML = '<i class=\"fas fa-graduation-cap\"></i>';
+      container.appendChild(a);
+    } else if(u && u.type === 'user'){
+      var p = document.createElement('a'); p.href='profile.html'; p.title='الملف الشخصي'; p.innerHTML = '<i class=\"fas fa-user\"></i>';
+      container.appendChild(p);
+    } else {
+      var l = document.createElement('a'); l.href='login.html'; l.title='تسجيل الدخول'; l.innerHTML = '<i class=\"fas fa-sign-in-alt\"></i>'; container.appendChild(l);
+    }
+  }catch(e){ console.error(e); }
+});
+</script>
+
+</body>
+</html>

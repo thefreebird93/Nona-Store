@@ -1,0 +1,120 @@
+{
+  "tips": [
+    {
+      "id": "1",
+      "title": "The Ultimate Daily Skincare Routine",
+      "excerpt": "Discover the essential steps for maintaining healthy, glowing skin every day.",
+      "content": "A consistent skincare routine is the foundation of healthy, radiant skin. Here's your step-by-step guide to the perfect daily routine...",
+      "category": "skincare",
+      "author": "Dr. Emily Chen",
+      "publishDate": "2024-01-15",
+      "readTime": "8 min",
+      "image": "assets/images/tips/skincare-routine.jpg",
+      "featured": true,
+      "tags": ["skincare", "routine", "daily", "basics"],
+      "products": ["2", "4", "6"]
+    },
+    {
+      "id": "2",
+      "title": "Winter Skincare: Protecting Your Skin in Cold Weather",
+      "excerpt": "Learn how to adapt your skincare routine for the harsh winter months.",
+      "content": "Winter weather can be particularly challenging for your skin. The cold air and low humidity can lead to dryness and irritation...",
+      "category": "skincare",
+      "author": "Dr. Sarah Mitchell",
+      "publishDate": "2023-12-10",
+      "readTime": "6 min",
+      "image": "assets/images/tips/winter-skincare.jpg",
+      "featured": false,
+      "tags": ["winter", "skincare", "dryness", "protection"],
+      "products": ["3", "5"]
+    },
+    {
+      "id": "3",
+      "title": "5 Natural Ingredients for Hair Growth",
+      "excerpt": "Boost your hair growth with these powerful natural ingredients.",
+      "content": "If you're looking to promote healthy hair growth, nature has some amazing solutions. Here are five natural ingredients that can help...",
+      "category": "haircare",
+      "author": "James Wilson",
+      "publishDate": "2023-11-28",
+      "readTime": "5 min",
+      "image": "assets/images/tips/hair-growth.jpg",
+      "featured": false,
+      "tags": ["haircare", "growth", "natural", "ingredients"],
+      "products": ["1", "6"]
+    },
+    {
+      "id": "4",
+      "title": "The 5-Minute Makeup Routine for Busy Mornings",
+      "excerpt": "Look polished and put together even when you're short on time.",
+      "content": "Mornings can be hectic, but that doesn't mean you have to skip makeup altogether. This 5-minute routine will have you looking fresh...",
+      "category": "makeup",
+      "author": "Maria Rodriguez",
+      "publishDate": "2023-11-15",
+      "readTime": "4 min",
+      "image": "assets/images/tips/quick-makeup.jpg",
+      "featured": false,
+      "tags": ["makeup", "quick", "routine", "morning"],
+      "products": ["7", "8"]
+    },
+    {
+      "id": "5",
+      "title": "Understanding Your Skin Type: A Complete Guide",
+      "excerpt": "Learn how to identify your skin type and choose the right products.",
+      "content": "Knowing your skin type is the first step toward building an effective skincare routine. Here's how to identify yours...",
+      "category": "skincare",
+      "author": "Dr. Emily Chen",
+      "publishDate": "2023-11-05",
+      "readTime": "7 min",
+      "image": "assets/images/tips/skin-types.jpg",
+      "featured": false,
+      "tags": ["skincare", "types", "guide", "basics"],
+      "products": ["2", "3", "4"]
+    },
+    {
+      "id": "6",
+      "title": "The Benefits of Double Cleansing",
+      "excerpt": "Why this Korean beauty technique is essential for clear skin.",
+      "content": "Double cleansing might sound like extra work, but it's a game-changer for your skincare routine. Here's why you should consider it...",
+      "category": "skincare",
+      "author": "Maria Rodriguez",
+      "publishDate": "2023-10-20",
+      "readTime": "5 min",
+      "image": "assets/images/tips/double-cleansing.jpg",
+      "featured": false,
+      "tags": ["cleansing", "k-beauty", "routine", "deep-clean"],
+      "products": ["2", "9"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "skincare",
+      "name": "Skincare",
+      "description": "Tips and advice for healthy, glowing skin",
+      "count": 4
+    },
+    {
+      "id": "haircare",
+      "name": "Haircare",
+      "description": "Hair care tips and styling advice",
+      "count": 1
+    },
+    {
+      "id": "makeup",
+      "name": "Makeup",
+      "description": "Makeup techniques and product recommendations",
+      "count": 1
+    },
+    {
+      "id": "wellness",
+      "name": "Wellness",
+      "description": "Overall wellness and self-care tips",
+      "count": 0
+    },
+    {
+      "id": "seasonal",
+      "name": "Seasonal Care",
+      "description": "Seasonal beauty tips and routines",
+      "count": 1
+    }
+  ]
+}

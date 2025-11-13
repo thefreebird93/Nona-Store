@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Nona Beauty</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="assets/js/helpers.js" defer></script>
+</head>
+<body class="english">
+    <!-- Header (same as index.html) -->
+<!-- Loading Screen -->
+<div class="loader" id="pageLoader">
+    <div class="loader-spinner"></div>
+</div>
+
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">NB</div>
+                <div class="logo-text">
+                    <h1>Nona Beauty</h1>
+                    <p>Your Beauty Passion</p>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="products.html" class="nav-link">Products</a></li>
+                    <li><a href="offers.html" class="nav-link">Offers</a></li>
+                    <li><a href="tips.html" class="nav-link">Beauty Tips</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="user-actions">
+                    <a href="login.html" class="auth-btn login-btn" id="loginBtn">Login</a>
+                    <a href="login.html" class="auth-btn register-btn" id="registerBtn">Register</a>
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <button class="user-profile-btn">
+                            <i class="fas fa-user"></i>
+                            <span id="userName">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-dropdown">
+                            <a href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a>
+                            <a href="profile.html#orders"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                            <a href="profile.html#addresses"><i class="fas fa-map-marker-alt"></i> Shipping Addresses</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-icons">
+                    <div class="wishlist-icon" id="wishlistIcon">
+                        <i class="far fa-heart"></i>
+                        <span class="wishlist-count">0</span>
+                    </div>
+                    <div class="cart-icon" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="about-page">
+        <!-- Hero Section -->
+        <section class="page-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>About Nona Beauty</h1>
+                    <p>Your trusted partner in beauty and skincare</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Story -->
+        <section class="our-story">
+            <div class="container">
+                <div class="story-grid">
+                    <div class="story-content">
+                        <h2>Our Story</h2>
+                        <p class="lead">Founded with a passion for beauty and a commitment to quality, Nona Beauty has been transforming skincare routines since our inception.</p>
+                        
+                        <div class="story-text">
+                            <p>At Nona Beauty, we believe that everyone deserves to feel confident and beautiful in their own skin. Our journey began with a simple mission: to provide high-quality, effective beauty products that are accessible to all.</p>
+                            
+                            <p>We carefully curate our product selection, working with trusted manufacturers and conducting rigorous testing to ensure every item meets our strict quality standards. From luxurious skincare to essential haircare, each product is chosen with your beauty needs in mind.</p>
+                        </div>
+
+                        <div class="achievements">
+                            <div class="achievement-item">
+                                <div class="achievement-number">5+</div>
+                                <div class="achievement-text">Years of Excellence</div>
+                            </div>
+                            <div class="achievement-item">
+                                <div class="achievement-number">500+</div>
+                                <div class="achievement-text">Products</div>
+                            </div>
+                            <div class="achievement-item">
+                                <div class="achievement-number">50K+</div>
+                                <div class="achievement-text">Happy Customers</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-image">
+                        <img src="assets/images/about/story.jpg" alt="Our Story">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Values -->
+        <section class="our-values">
+            <div class="container">
+                <h2 class="section-title">Our Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3>Quality First</h3>
+                        <p>We never compromise on quality. Every product is thoroughly tested to meet our high standards.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Natural Ingredients</h3>
+                        <p>We prioritize natural, safe ingredients that are effective and gentle on your skin.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Customer Care</h3>
+                        <p>Your satisfaction is our priority. We're here to support your beauty journey every step of the way.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-recycle"></i>
+                        </div>
+                        <h3>Sustainability</h3>
+                        <p>We're committed to eco-friendly practices and sustainable packaging solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="our-team">
+            <div class="container">
+                <h2 class="section-title">Meet Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="assets/images/team/ceo.jpg" alt="Sarah Johnson">
+                        </div>
+                        <h3>Sarah Johnson</h3>
+                        <p class="member-role">Founder & CEO</p>
+                        <p class="member-bio">With over 10 years in the beauty industry, Sarah leads our vision for quality and innovation.</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="assets/images/team/cto.jpg" alt="Dr. Emily Chen">
+                        </div>
+                        <h3>Dr. Emily Chen</h3>
+                        <p class="member-role">Head of Product Development</p>
+                        <p class="member-bio">A skincare specialist with a PhD in Dermatology, ensuring our products are scientifically sound.</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="assets/images/team/cm.jpg" alt="Mike Rodriguez">
+                        </div>
+                        <h3>Mike Rodriguez</h3>
+                        <p class="member-role">Customer Experience Manager</p>
+                        <p class="member-bio">Dedicated to ensuring every customer has an exceptional shopping experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Start Your Beauty Journey?</h2>
+                    <p>Discover our curated collection of premium beauty products</p>
+                    <div class="cta-buttons">
+                        <a href="products.html" class="btn btn-primary">Shop Now</a>
+                        <a href="contact.html" class="btn btn-outline">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Nona Beauty</h3>
+                <p>Your trusted partner in beauty and skincare. We provide high-quality products for your beauty journey.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="offers.html">Offers</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul class="footer-links">
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> info@nonabeauty.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Beauty Street, NY 10001</p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Nona Beauty. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<li><a href="about.html" class="nav-link active">About Us</a></li>
+</body>
+</html>

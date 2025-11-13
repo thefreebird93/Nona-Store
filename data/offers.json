@@ -1,0 +1,181 @@
+{
+  "offers": [
+    {
+      "id": "1",
+      "title": "Mega Skincare Sale",
+      "description": "Up to 50% off on selected skincare products",
+      "discount": 50,
+      "type": "percentage",
+      "category": "skincare",
+      "startDate": "2024-01-01",
+      "endDate": "2024-01-31",
+      "isActive": true,
+      "featured": true,
+      "image": "assets/images/offers/skincare-sale.jpg",
+      "products": ["2", "3", "4", "5"],
+      "terms": "Valid on selected skincare products only. Cannot be combined with other offers."
+    },
+    {
+      "id": "2",
+      "title": "Buy 2 Get 1 Free - Haircare",
+      "description": "Purchase any two haircare products and get one free",
+      "discount": 100,
+      "type": "bogo",
+      "category": "haircare",
+      "startDate": "2024-01-15",
+      "endDate": "2024-02-15",
+      "isActive": true,
+      "featured": false,
+      "image": "assets/images/offers/haircare-bogo.jpg",
+      "products": ["1", "6"],
+      "terms": "Free product must be of equal or lesser value. Limited to one free product per transaction."
+    },
+    {
+      "id": "3",
+      "title": "Free Shipping on Orders Over $50",
+      "description": "Enjoy free standard shipping on all orders above $50",
+      "discount": 0,
+      "type": "shipping",
+      "category": "all",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
+      "isActive": true,
+      "featured": false,
+      "image": "assets/images/offers/free-shipping.jpg",
+      "products": [],
+      "terms": "Valid on standard shipping within the continental US. Excludes expedited shipping options."
+    },
+    {
+      "id": "4",
+      "title": "Winter Perfume Collection - 25% OFF",
+      "description": "Special discount on our winter perfume collection",
+      "discount": 25,
+      "type": "percentage",
+      "category": "perfumes",
+      "startDate": "2023-12-01",
+      "endDate": "2024-02-29",
+      "isActive": true,
+      "featured": true,
+      "image": "assets/images/offers/winter-perfumes.jpg",
+      "products": ["7", "8", "9"],
+      "terms": "Valid on winter collection perfumes only. While supplies last."
+    },
+    {
+      "id": "5",
+      "title": "New Customer Welcome Offer - 15% OFF",
+      "description": "Special discount for first-time customers",
+      "discount": 15,
+      "type": "percentage",
+      "category": "all",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31",
+      "isActive": true,
+      "featured": false,
+      "image": "assets/images/offers/welcome-offer.jpg",
+      "products": [],
+      "code": "WELCOME15",
+      "terms": "Valid for first-time customers only. One use per customer. Cannot be combined with other offers."
+    }
+  ],
+  "bundles": [
+    {
+      "id": "bundle-1",
+      "name": "Complete Skincare Routine",
+      "description": "Everything you need for perfect skin - cleanser, toner, serum, and moisturizer",
+      "originalPrice": 120.00,
+      "bundlePrice": 89.99,
+      "discount": 25,
+      "image": "assets/images/offers/skincare-bundle.jpg",
+      "products": [
+        {
+          "id": "2",
+          "name": "Gentle Cleanser",
+          "quantity": 1
+        },
+        {
+          "id": "3",
+          "name": "Hydrating Toner",
+          "quantity": 1
+        },
+        {
+          "id": "4",
+          "name": "Vitamin C Serum",
+          "quantity": 1
+        },
+        {
+          "id": "5",
+          "name": "Daily Moisturizer",
+          "quantity": 1
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "bundle-2",
+      "name": "Luxury Haircare Set",
+      "description": "Transform your hair with our premium haircare collection",
+      "originalPrice": 85.00,
+      "bundlePrice": 65.99,
+      "discount": 22,
+      "image": "assets/images/offers/haircare-bundle.jpg",
+      "products": [
+        {
+          "id": "1",
+          "name": "Nourishing Shampoo",
+          "quantity": 1
+        },
+        {
+          "id": "6",
+          "name": "Repairing Conditioner",
+          "quantity": 1
+        },
+        {
+          "id": "10",
+          "name": "Hair Mask",
+          "quantity": 1
+        },
+        {
+          "id": "11",
+          "name": "Argan Oil",
+          "quantity": 1
+        }
+      ],
+      "isActive": true
+    }
+  ],
+  "coupons": [
+    {
+      "code": "WELCOME10",
+      "discount": 10,
+      "type": "percentage",
+      "minAmount": 0,
+      "maxDiscount": 50,
+      "validUntil": "2024-12-31",
+      "usageLimit": 1,
+      "usedCount": 0,
+      "isActive": true
+    },
+    {
+      "code": "SAVE20",
+      "discount": 20,
+      "type": "percentage",
+      "minAmount": 100,
+      "maxDiscount": 100,
+      "validUntil": "2024-03-31",
+      "usageLimit": 1000,
+      "usedCount": 245,
+      "isActive": true
+    },
+    {
+      "code": "FREESHIP",
+      "discount": 0,
+      "type": "shipping",
+      "minAmount": 0,
+      "maxDiscount": 0,
+      "validUntil": "2024-06-30",
+      "usageLimit": 5000,
+      "usedCount": 1234,
+      "isActive": true
+    }
+  ]
+}

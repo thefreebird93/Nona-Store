@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Nona Beauty</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="assets/js/helpers.js" defer></script>
+</head>
+<body class="english">
+    <!-- Header (same as index.html) -->
+
+    <main>
+
+<!-- User profile page patched to support local profile editing and order history -->
+<div style="max-width:900px;margin:14px auto;padding:12px;background:#fff;border-radius:8px;">
+  <h2>الملف الشخصي</h2>
+  <div id="profileForm">
+    <div><label>الاسم: <input id="pf_name" style="width:100%;padding:8px;" /></label></div>
+    <div><label>البريد الإلكتروني: <input id="pf_email" style="width:100%;padding:8px;" /></label></div>
+    <div><label>العنوان: <input id="pf_address" style="width:100%;padding:8px;" /></label></div>
+    <div><label>الهاتف: <input id="pf_phone" style="width:100%;padding:8px;" /></label></div>
+    <div style="margin-top:8px;"><button id="pf_save">حفظ</button> <button id="pf_logout">خروج</button></div>
+  </div>
+  <hr/>
+  <h3>الطلبات السابقة</h3>
+  <div id="ordersList"></div>
+</div>
+<script src="assets/js/auth.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try{
+    var u = (window.Auth && window.Auth.getUser) ? window.Auth.getUser() : { type: localStorage.getItem('userType'), email: localStorage.getItem('userEmail') };
+    if(!u || u.type !== 'user'){ /* allow guest editing? redirect to login */ }
+    var email = u.email || localStorage.getItem('userEmail') || '';
+    var key = 'userProfile_' + email;
+    var p = localStorage.getItem(key);
+    var profile = p ? JSON.parse(p) : { name:'', email: email, address:'', phone:'' };
+    document.getElementById('pf_name').value = profile.name || '';
+    document.getElementById('pf_email').value = profile.email || email;
+    document.getElementById('pf_address').value = profile.address || '';
+    document.getElementById('pf_phone').value = profile.phone || '';
+    document.getElementById('pf_save').addEventListener('click', function(){
+      profile.name = document.getElementById('pf_name').value;
+      profile.email = document.getElementById('pf_email').value;
+      profile.address = document.getElementById('pf_address').value;
+      profile.phone = document.getElementById('pf_phone').value;
+      localStorage.setItem(key, JSON.stringify(profile));
+      alert('تم الحفظ');
+    });
+    document.getElementById('pf_logout').addEventListener('click', function(){
+      if(window.Auth) window.Auth.logout(); location.href='index.html';
+    });
+
+    // load orders for this user (stored under 'nonaBeautyOrders' array)
+    var orders = JSON.parse(localStorage.getItem('nonaBeautyOrders') || '[]');
+    var userOrders = orders.filter(o => (o.customer_email || o.customer) && (o.customer_email === email || o.customer === email));
+    var out = '<table style="width:100%;border-collapse:collapse;"><tr><th>Order ID</th><th>Date</th><th>Total</th><th>Status</th></tr>';
+    userOrders.forEach(o => {
+      out += '<tr style="border-top:1px solid #eee"><td>'+ (o.id || o.orderId || 'N/A') +'</td><td>'+ (o.date || '') +'</td><td>'+ (o.total || '') +'</td><td>'+ (o.status || 'Placed') +'</td></tr>';
+    });
+    out += '</table>';
+    document.getElementById('ordersList').innerHTML = out || '<div>لا توجد طلبات سابقة</div>';
+  }catch(e){ console.error(e); }
+});
+</script>
+
+</main>
+
+    <!-- Footer (same as index.html) -->
+
+    <script src="assets/js/profile.js"></script>
+</body>
+</html>

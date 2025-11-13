@@ -1,0 +1,108 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin User",
+      "email": "admin@nonabeauty.com",
+      "phone": "+1234567890",
+      "role": "admin",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "lastLogin": "2024-01-15T10:30:00.000Z",
+      "isActive": true,
+      "permissions": [
+        "read",
+        "write",
+        "delete",
+        "admin"
+      ],
+      "_password_removed": true
+    },
+    {
+      "id": "2",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1234567891",
+      "role": "customer",
+      "createdAt": "2024-01-10T14:20:00.000Z",
+      "lastLogin": "2024-01-15T09:15:00.000Z",
+      "isActive": true,
+      "addresses": [
+        {
+          "id": "1",
+          "type": "home",
+          "firstName": "John",
+          "lastName": "Doe",
+          "street": "123 Main Street",
+          "city": "New York",
+          "state": "NY",
+          "zipCode": "10001",
+          "country": "USA",
+          "phone": "+1234567891",
+          "isDefault": true
+        },
+        {
+          "id": "2",
+          "type": "work",
+          "firstName": "John",
+          "lastName": "Doe",
+          "street": "456 Business Ave",
+          "city": "New York",
+          "state": "NY",
+          "zipCode": "10002",
+          "country": "USA",
+          "phone": "+1234567891",
+          "isDefault": false
+        }
+      ],
+      "preferences": {
+        "newsletter": true,
+        "productUpdates": true,
+        "specialOffers": true
+      },
+      "_password_removed": true
+    },
+    {
+      "id": "3",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "phone": "+1234567892",
+      "role": "customer",
+      "createdAt": "2024-01-12T16:45:00.000Z",
+      "lastLogin": "2024-01-14T11:20:00.000Z",
+      "isActive": true,
+      "addresses": [
+        {
+          "id": "1",
+          "type": "home",
+          "firstName": "Jane",
+          "lastName": "Smith",
+          "street": "789 Park Lane",
+          "city": "Los Angeles",
+          "state": "CA",
+          "zipCode": "90210",
+          "country": "USA",
+          "phone": "+1234567892",
+          "isDefault": true
+        }
+      ],
+      "preferences": {
+        "newsletter": true,
+        "productUpdates": false,
+        "specialOffers": true
+      },
+      "wishlist": [
+        "1",
+        "2",
+        "5"
+      ],
+      "_password_removed": true
+    }
+  ],
+  "userStats": {
+    "totalUsers": 3,
+    "activeUsers": 3,
+    "newUsersToday": 0,
+    "newUsersThisWeek": 2,
+    "newUsersThisMonth": 3
+  }
+}

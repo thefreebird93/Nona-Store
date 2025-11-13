@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Nona Beauty</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .products-page {
+            min-height: 100vh;
+            padding: 40px 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--muted-text);
+            font-size: 18px;
+        }
+
+        .products-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filters-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filter-toggle {
+            background: var(--white);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-toggle:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .sorting-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: var(--border-radius);
+            background: var(--white);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .products-container {
+            margin-bottom: 40px;
+        }
+
+        .load-more {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .filters-panel {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .filters-panel.active {
+            display: block;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group h4 {
+            margin-bottom: 15px;
+            color: var(--dark-text);
+            font-size: 16px;
+        }
+
+        .category-filters {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-filters label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .price-filter {
+            padding: 0 10px;
+        }
+
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--muted-text);
+        }
+
+        .discount-filters {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .discount-filters label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+    </style>
+    <script src="assets/js/helpers.js" defer></script>
+</head>
+<body class="english">
+    <!-- Loading Screen -->
+    <div class="loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">NB</div>
+                    <div class="logo-text">
+                        <h1>Nona Beauty</h1>
+                        <p>Your Beauty Passion</p>
+                    </div>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="products.html" class="nav-link active">Products</a></li>
+                        <li><a href="offers.html" class="nav-link">Offers</a></li>
+                        <li><a href="tips.html" class="nav-link">Beauty Tips</a></li>
+                        <li><a href="about.html" class="nav-link">About Us</a></li>
+                        <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-actions">
+                    <div class="user-actions">
+                        <a href="login.html" class="auth-btn login-btn" id="loginBtn">Login</a>
+                        <a href="login.html" class="auth-btn register-btn" id="registerBtn">Register</a>
+                        <div class="user-menu" id="userMenu" style="display: none;">
+                            <button class="user-profile-btn">
+                                <i class="fas fa-user"></i>
+                                <span id="userName">User</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="user-dropdown">
+                                <a href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a>
+                                <a href="profile.html#orders"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                                <a href="profile.html#addresses"><i class="fas fa-map-marker-alt"></i> Shipping Addresses</a>
+                                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-icons">
+                        <div class="wishlist-icon" id="wishlistIcon">
+                            <i class="far fa-heart"></i>
+                            <span class="wishlist-count">0</span>
+                        </div>
+                        <div class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="products-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Our Products</h1>
+                <p>Discover our complete collection of beauty products</p>
+            </div>
+
+            <!-- Filters and Sorting -->
+            <div class="products-controls">
+                <div class="filters-section">
+                    <button class="filter-toggle" id="filterToggle">
+                        <i class="fas fa-filter"></i>
+                        Filters
+                    </button>
+                </div>
+                
+                <div class="sorting-section">
+                    <select id="sortSelect" class="sort-select">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name">Name: A-Z</option>
+                        <option value="discount">Best Discount</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filters Panel -->
+            <div class="filters-panel" id="filtersPanel">
+                <div class="filter-group">
+                    <h4>Categories</h4>
+                    <div class="category-filters" id="categoryFilters">
+                        <!-- Categories will be loaded by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Price Range</h4>
+                    <div class="price-filter">
+                        <input type="range" id="priceRange" min="0" max="1000" value="1000" step="10">
+                        <div class="price-values">
+                            <span id="minPrice">0 EGP</span>
+                            <span id="maxPrice">1000 EGP</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Discounts</h4>
+                    <div class="discount-filters">
+                        <label>
+                            <input type="checkbox" name="discount" value="10">
+                            10% off or more
+                        </label>
+                        <label>
+                            <input type="checkbox" name="discount" value="20">
+                            20% off or more
+                        </label>
+                        <label>
+                            <input type="checkbox" name="discount" value="30">
+                            30% off or more
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-container">
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded by JavaScript -->
+                </div>
+                
+                <div class="load-more">
+                    <button class="btn btn-outline" id="loadMoreBtn">Load More Products</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Nona Beauty</h3>
+                    <p>Your trusted partner in beauty and skincare. We provide high-quality products for your beauty journey.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="offers.html">Offers</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> info@nonabeauty.com</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Beauty Street, NY 10001</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Nona Beauty. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/main.js"></script>
+    <script>
+        // نظام المنتجات
+        class ProductsPage {
+            constructor() {
+                this.products = [];
+                this.filteredProducts = [];
+                this.currentSort = 'featured';
+                this.currentPage = 1;
+                this.productsPerPage = 12;
+                this.init();
+            }
+
+            init() {
+                this.loadProducts();
+                this.setupEventListeners();
+                this.loadCategories();
+                this.displayProducts();
+            }
+
+            loadProducts() {
+                if (window.nonaBeautyApp && window.nonaBeautyApp.products) {
+                    this.products = window.nonaBeautyApp.products;
+                } else {
+                    const productsData = localStorage.getItem('nonaBeautyProducts');
+                    if (productsData) {
+                        this.products = JSON.parse(productsData);
+                    }
+                }
+                this.filteredProducts = [...this.products];
+            }
+
+            setupEventListeners() {
+                // تبديل الفلتر
+                const filterToggle = document.getElementById('filterToggle');
+                const filtersPanel = document.getElementById('filtersPanel');
+                
+                if (filterToggle && filtersPanel) {
+                    filterToggle.addEventListener('click', () => {
+                        filtersPanel.classList.toggle('active');
+                    });
+                }
+
+                // الترتيب
+                const sortSelect = document.getElementById('sortSelect');
+                if (sortSelect) {
+                    sortSelect.addEventListener('change', (e) => {
+                        this.currentSort = e.target.value;
+                        this.sortProducts();
+                        this.displayProducts();
+                    });
+                }
+
+                // تحميل المزيد
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) {
+                    loadMoreBtn.addEventListener('click', () => {
+                        this.loadMoreProducts();
+                    });
+                }
+
+                // فلتر السعر
+                const priceRange = document.getElementById('priceRange');
+                if (priceRange) {
+                    priceRange.addEventListener('input', (e) => {
+                        this.updatePriceDisplay(e.target.value);
+                        this.filterProducts();
+                    });
+                }
+
+                // فلاتر الخصم
+                const discountFilters = document.querySelectorAll('input[name="discount"]');
+                discountFilters.forEach(filter => {
+                    filter.addEventListener('change', () => {
+                        this.filterProducts();
+                    });
+                });
+            }
+
+            loadCategories() {
+                const categoryFilters = document.getElementById('categoryFilters');
+                if (!categoryFilters) return;
+
+                const categories = [
+                    { id: 'hair', name: 'Hair Care' },
+                    { id: 'face', name: 'Skin Care' },
+                    { id: 'lips', name: 'Lip Products' },
+                    { id: 'body', name: 'Body Care' },
+                    { id: 'perfumes', name: 'Perfumes' }
+                ];
+
+                safeSetHTML(categoryFilters, categories.map(category => `
+                    <label>
+                        <input type="checkbox" class="category-filter" value="${category.id}">
+                        ${category.name}
+                    </label>
+                `).join(''));
+
+                // إعادة إرفاق الأحداث بعد التحميل
+                document.querySelectorAll('.category-filter').forEach(filter => {
+                    filter.addEventListener('change', () => {
+                        this.filterProducts();
+                    });
+                });
+            }
+
+            filterProducts() {
+                let filtered = [...this.products];
+
+                // فلتر الفئات
+                const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
+                    .map(checkbox => checkbox.value);
+                
+                if (selectedCategories.length > 0) {
+                    filtered = filtered.filter(product => selectedCategories.includes(product.category));
+                }
+
+                // فلتر السعر
+                const priceRange = document.getElementById('priceRange');
+                if (priceRange) {
+                    const maxPrice = parseInt(priceRange.value);
+                    filtered = filtered.filter(product => product.price <= maxPrice);
+                }
+
+                // فلتر الخصومات
+                const selectedDiscounts = Array.from(document.querySelectorAll('input[name="discount"]:checked'))
+                    .map(checkbox => parseInt(checkbox.value));
+                
+                if (selectedDiscounts.length > 0) {
+                    filtered = filtered.filter(product => 
+                        product.discount && selectedDiscounts.some(discount => product.discount >= discount)
+                    );
+                }
+
+                this.filteredProducts = filtered;
+                this.currentPage = 1;
+                this.sortProducts();
+                this.displayProducts();
+            }
+
+            sortProducts() {
+                switch (this.currentSort) {
+                    case 'price-low':
+                        this.filteredProducts.sort((a, b) => a.price - b.price);
+                        break;
+                    case 'price-high':
+                        this.filteredProducts.sort((a, b) => b.price - a.price);
+                        break;
+                    case 'name':
+                        this.filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                        break;
+                    case 'discount':
+                        this.filteredProducts.sort((a, b) => (b.discount || 0) - (a.discount || 0));
+                        break;
+                    case 'newest':
+                        this.filteredProducts.sort((a, b) => b.id - a.id);
+                        break;
+                    case 'featured':
+                    default:
+                        this.filteredProducts.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || b.rating - a.rating);
+                        break;
+                }
+            }
+
+            displayProducts() {
+                const productsGrid = document.getElementById('productsGrid');
+                if (!productsGrid) return;
+
+                const startIndex = (this.currentPage - 1) * this.productsPerPage;
+                const endIndex = startIndex + this.productsPerPage;
+                const productsToShow = this.filteredProducts.slice(startIndex, endIndex);
+
+                if (productsToShow.length === 0) {
+                    safeSetHTML(productsGrid, `
+                        <div class="no-products" style="grid-column: 1 / -1); text-align: center; padding: 40px;">
+                            <i class="fas fa-search" style="font-size: 48px; color: #e2e8f0; margin-bottom: 20px;"></i>
+                            <h3>No products found</h3>
+                            <p>Try adjusting your filters or search terms</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                safeSetHTML(productsGrid, productsToShow.map(product => 
+                    window.nonaBeautyApp.createProductCard(product)
+                ).join(''));
+
+                // تحديث زر تحميل المزيد
+                this.updateLoadMoreButton();
+
+                // إرفاق أحداث المنتجات
+                if (window.nonaBeautyApp) {
+                    window.nonaBeautyApp.attachProductEventListeners();
+                }
+            }
+
+            loadMoreProducts() {
+                this.currentPage++;
+                this.displayProducts();
+            }
+
+            updateLoadMoreButton() {
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (!loadMoreBtn) return;
+
+                const totalPages = Math.ceil(this.filteredProducts.length / this.productsPerPage);
+                
+                if (this.currentPage >= totalPages) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'block';
+                }
+            }
+
+            updatePriceDisplay(value) {
+                const maxPrice = document.getElementById('maxPrice');
+                if (maxPrice) {
+                    maxPrice.textContent = `${value} EGP`;
+                }
+            }
+        }
+
+        // تهيئة صفحة المنتجات
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.nonaBeautyApp) {
+                new ProductsPage();
+            } else {
+                setTimeout(() => {
+                    new ProductsPage();
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

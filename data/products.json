@@ -1,0 +1,89 @@
+{
+  "products": [
+    {
+      "id": "hair_1",
+      "name": "Sulfate-Free Shampoo 400ml",
+      "price": 170,
+      "originalPrice": 200,
+      "discount": 15,
+      "category": "hair",
+      "image": "assets/images/products/shampoo.jpg",
+      "description": "Gentle sulfate-free shampoo that cleanses without stripping natural oils. Perfect for daily use on all hair types.",
+      "rating": 4.5,
+      "reviewCount": 24,
+      "inStock": true,
+      "sku": "NB1001",
+      "tags": ["hair", "care", "natural"],
+      "features": ["Sulfate-Free", "Natural Ingredients", "Daily Use"]
+    },
+    {
+      "id": "face_1",
+      "name": "Niacinamide Serum",
+      "price": 350,
+      "originalPrice": 420,
+      "discount": 17,
+      "category": "face",
+      "image": "assets/images/products/serum.jpg",
+      "description": "Powerful serum combining hyaluronic acid, niacinamide and alpha urea for glowing skin.",
+      "rating": 4.8,
+      "reviewCount": 45,
+      "inStock": true,
+      "sku": "NB4002",
+      "tags": ["skin", "serum", "care"],
+      "features": ["Brightening", "Hydrating", "Anti-Aging"]
+    },
+    {
+      "id": "perfumes_1",
+      "name": "Floral Elegance Perfume 50ml",
+      "price": 400,
+      "originalPrice": 500,
+      "discount": 20,
+      "category": "perfumes",
+      "image": "assets/images/products/perfume.jpg",
+      "description": "Elegant floral perfume with long-lasting fragrance.",
+      "rating": 4.7,
+      "reviewCount": 38,
+      "inStock": true,
+      "sku": "NB5002",
+      "tags": ["perfume", "elegance", "floral"],
+      "features": ["Long-Lasting", "Elegant Scent", "Premium Packaging"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "hair",
+      "name": "Hair Care",
+      "description": "Shampoo, conditioner, hair masks and oils for perfect hair care",
+      "icon": "fas fa-air-freshener",
+      "image": "assets/images/categories/hair-care.jpg"
+    },
+    {
+      "id": "face",
+      "name": "Skin Care",
+      "description": "Cleansers, toners, serums and creams for glowing skin",
+      "icon": "fas fa-gem",
+      "image": "assets/images/categories/skin-care.jpg"
+    },
+    {
+      "id": "lips",
+      "name": "Lip Products",
+      "description": "Lip gloss, lip balm and lipstick in amazing colors",
+      "icon": "fas fa-kiss-wink-heart",
+      "image": "assets/images/categories/lips.jpg"
+    },
+    {
+      "id": "body",
+      "name": "Body Care",
+      "description": "Shower gel, scrubs, lotion and body butter for complete care",
+      "icon": "fas fa-spa",
+      "image": "assets/images/categories/body-care.jpg"
+    },
+    {
+      "id": "perfumes",
+      "name": "Perfumes",
+      "description": "A distinctive collection of perfumes with various notes to suit all tastes",
+      "icon": "fas fa-wind",
+      "image": "assets/images/categories/perfumes.jpg"
+    }
+  ]
+}
