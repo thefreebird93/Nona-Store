@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="assets/js/helpers.js" defer></script>
-    <script src="assets/js/helpers.js" defer></script>\n    <script src="assets/js/translations.js" defer></script>\n    <script src="assets/js/config.js" defer></script>\n</head>
+    <script src="assets/js/translations.js" defer></script>
+    <script src="assets/js/config.js" defer></script>
+</head>
 <body>
 
-<!-- ADMIN_GUARD_SNIPPET: ensures only admin can access -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   try{
@@ -23,13 +24,11 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   try{
     var user = safeGet('nonaBeautyUser');
     if(!user || !user.role || user.role !== 'admin'){
-      // redirect to home if not admin
       window.location.replace('index.html');
     }
   }catch(e){
@@ -109,149 +108,318 @@ document.addEventListener('DOMContentLoaded', function(){
         </aside>
 
         <!-- Main Content -->
-        <main>\n<div id="admin-content"></div> class="main-content">
-            <!-- Header -->
-            <header class="admin-header">
-                <div class="header-left">
-                    <button class="sidebar-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h1 id="pageTitle">Dashboard</h1>
-                </div>
-                
-                <div class="header-right">
-                    <div class="admin-search">
-                        <input type="text" placeholder="Search..." id="adminSearch">
-                        <i class="fas fa-search"></i>
+        <main>
+            <div id="admin-content" class="main-content">
+                <!-- Header -->
+                <header class="admin-header">
+                    <div class="header-left">
+                        <button class="sidebar-toggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <h1 id="pageTitle">Dashboard</h1>
                     </div>
                     
-                    <div class="admin-profile">
-                        <div class="profile-dropdown">
-                            <img src="assets/images/general/admin-avatar.jpg" alt="Admin" class="profile-img">
-                            <span>Admin User</span>
-                            <i class="fas fa-chevron-down"></i>
-                            
-                            <div class="dropdown-menu">
-                                <a href="#profile"><i class="fas fa-user"></i> Profile</a>
-                                <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
-                                <a href="#" id="adminLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Content Area -->
-            <div class="content-area">
-                <!-- Dashboard Page -->
-                <section id="dashboard" class="page active">
-                    <div class="stats-grid">
-                        <!-- Statistics cards will be loaded by JavaScript -->
-                    </div>
-
-                    <div class="charts-section">
-                        <div class="chart-card">
-                            <h3>Sales Overview</h3>
-                            <div class="chart-container">
-                                <canvas id="salesChart"></canvas>
-                            </div>
+                    <div class="header-right">
+                        <div class="admin-search">
+                            <input type="text" placeholder="Search..." id="adminSearch">
+                            <i class="fas fa-search"></i>
                         </div>
                         
-                        <div class="chart-card">
-                            <h3>Top Selling Products</h3>
-                            <div class="top-products" id="topProducts">
-                                <!-- Top products will be loaded by JavaScript -->
+                        <div class="admin-profile">
+                            <div class="profile-dropdown">
+                                <img src="assets/images/general/admin-avatar.jpg" alt="Admin" class="profile-img">
+                                <span>Admin User</span>
+                                <i class="fas fa-chevron-down"></i>
+                                
+                                <div class="dropdown-menu">
+                                    <a href="#profile"><i class="fas fa-user"></i> Profile</a>
+                                    <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                                    <a href="#" id="adminLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </header>
 
-                    <div class="recent-activity">
-                        <h3>Recent Orders</h3>
-                        <div class="activity-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Order ID</th>
-                                        <th>Customer</th>
-                                        <th>Date</th>
-                                        <th>Amount</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recentOrdersTable">
-                                    <!-- Orders will be loaded by JavaScript -->
-                                </tbody>
-                            </table>
+                <!-- Content Area -->
+                <div class="content-area">
+                    <!-- Dashboard Page -->
+                    <section id="dashboard" class="page active">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon sales">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Sales</h3>
+                                    <span class="stat-number">$12,458</span>
+                                    <span class="stat-change positive">+12%</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orders">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Orders</h3>
+                                    <span class="stat-number">156</span>
+                                    <span class="stat-change positive">+8%</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon customers">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Customers</h3>
+                                    <span class="stat-number">2,458</span>
+                                    <span class="stat-change positive">+15%</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon products">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Products</h3>
+                                    <span class="stat-number">89</span>
+                                    <span class="stat-change positive">+5%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </section>
 
-                <!-- Products Management Page -->
-                <section id="products" class="page">
-                    <div class="page-header">
-                        <h2>Products Management</h2>
-                        <button class="btn btn-primary" id="addProductBtn">
-                            <i class="fas fa-plus"></i>
-                            Add New Product
-                        </button>
-                    </div>
+                        <div class="charts-section">
+                            <div class="chart-card">
+                                <h3>Sales Overview</h3>
+                                <div class="chart-container">
+                                    <canvas id="salesChart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-card">
+                                <h3>Top Selling Products</h3>
+                                <div class="top-products" id="topProducts">
+                                    <div class="product-rank">
+                                        <span class="rank">1</span>
+                                        <div class="product-info">
+                                            <span class="product-name">Hydrating Face Serum</span>
+                                            <span class="product-sales">89 sales</span>
+                                        </div>
+                                        <span class="product-revenue">$31,150</span>
+                                    </div>
+                                    <div class="product-rank">
+                                        <span class="rank">2</span>
+                                        <div class="product-info">
+                                            <span class="product-name">Sulfate-Free Shampoo</span>
+                                            <span class="product-sales">76 sales</span>
+                                        </div>
+                                        <span class="product-revenue">$12,920</span>
+                                    </div>
+                                    <div class="product-rank">
+                                        <span class="rank">3</span>
+                                        <div class="product-info">
+                                            <span class="product-name">Floral Elegance Perfume</span>
+                                            <span class="product-sales">64 sales</span>
+                                        </div>
+                                        <span class="product-revenue">$25,600</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="products-management">
-                        <div class="products-filters">
-                            <select id="categoryFilter">
-                                <option value="all">All Categories</option>
-                                <!-- Categories will be loaded by JavaScript -->
-                            </select>
-                            
-                            <select id="statusFilter">
-                                <option value="all">All Status</option>
-                                <option value="inStock">In Stock</option>
-                                <option value="outOfStock">Out of Stock</option>
-                                <option value="onSale">On Sale</option>
-                            </select>
-                            
-                            <button class="btn btn-secondary" id="exportProducts">
-                                <i class="fas fa-download"></i>
-                                Export
+                        <div class="recent-activity">
+                            <h3>Recent Orders</h3>
+                            <div class="activity-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentOrdersTable">
+                                        <tr>
+                                            <td>ORD-001</td>
+                                            <td>John Doe</td>
+                                            <td>2024-01-15</td>
+                                            <td>$156.00</td>
+                                            <td><span class="status-badge status-delivered">Delivered</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">View</button>
+                                                <button class="btn btn-sm btn-secondary">Edit</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ORD-002</td>
+                                            <td>Sarah Smith</td>
+                                            <td>2024-01-14</td>
+                                            <td>$89.50</td>
+                                            <td><span class="status-badge status-shipped">Shipped</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">View</button>
+                                                <button class="btn btn-sm btn-secondary">Edit</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Products Management Page -->
+                    <section id="products" class="page">
+                        <div class="page-header">
+                            <h2>Products Management</h2>
+                            <button class="btn btn-primary" id="addProductBtn">
+                                <i class="fas fa-plus"></i>
+                                Add New Product
                             </button>
                         </div>
 
-                        <div class="products-table">
+                        <div class="products-management">
+                            <div class="products-filters">
+                                <select id="categoryFilter">
+                                    <option value="all">All Categories</option>
+                                    <option value="hair">Hair Care</option>
+                                    <option value="face">Skin Care</option>
+                                    <option value="lips">Lip Products</option>
+                                    <option value="body">Body Care</option>
+                                    <option value="perfumes">Perfumes</option>
+                                </select>
+                                
+                                <select id="statusFilter">
+                                    <option value="all">All Status</option>
+                                    <option value="inStock">In Stock</option>
+                                    <option value="outOfStock">Out of Stock</option>
+                                    <option value="onSale">On Sale</option>
+                                </select>
+                                
+                                <button class="btn btn-secondary" id="exportProducts">
+                                    <i class="fas fa-download"></i>
+                                    Export
+                                </button>
+                            </div>
+
+                            <div class="products-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product Name</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Discount</th>
+                                            <th>Stock</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productsTable">
+                                        <tr>
+                                            <td>
+                                                <img src="https://images.unsplash.com/photo-1625772299848-391b6a87d5b6?w=100" alt="Shampoo" class="product-image-small">
+                                            </td>
+                                            <td>Sulfate-Free Shampoo</td>
+                                            <td>Hair Care</td>
+                                            <td>$170</td>
+                                            <td>15%</td>
+                                            <td>45</td>
+                                            <td><span class="status-badge status-in-stock">In Stock</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Categories Page -->
+                    <section id="categories" class="page">
+                        <div class="page-header">
+                            <h2>Categories Management</h2>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Add New Category
+                            </button>
+                        </div>
+                        <div class="categories-table">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
-                                        <th>Product Name</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>Discount</th>
-                                        <th>Stock</th>
-                                        <th>Status</th>
+                                        <th>Category Name</th>
+                                        <th>Product Count</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="productsTable">
-                                    <!-- Products will be loaded by JavaScript -->
+                                <tbody id="categoriesTable">
+                                    <!-- Categories will be loaded here -->
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <!-- Other pages (Categories, Orders, Customers, Offers, Blog, Settings) -->
-                <!-- Implementation similar to products page -->
+                    <!-- Additional pages can be added here -->
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- Modals for adding/editing products, categories, etc. -->
+    <!-- Modals -->
     <div class="modal" id="addProductModal">
-        <!-- Modal content for adding/editing products -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Product</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Category</label>
+                        <select id="productCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="hair">Hair Care</option>
+                            <option value="face">Skin Care</option>
+                            <option value="lips">Lip Products</option>
+                            <option value="body">Body Care</option>
+                            <option value="perfumes">Perfumes</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productPrice">Price</label>
+                            <input type="number" id="productPrice" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock">Stock</label>
+                            <input type="number" id="productStock" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary cancel-btn">Cancel</button>
+                <button class="btn btn-primary" id="saveProduct">Save Product</button>
+            </div>
+        </div>
     </div>
 
     <script src="assets/js/admin.js"></script>
-<script src="assets/js/admin-enhanced.js" defer></script>
-<script src="assets/js/auth.js" defer></script>
+    <script src="assets/js/admin-enhanced.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
 </body>
 </html>
