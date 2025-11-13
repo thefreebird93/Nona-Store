@@ -3,187 +3,423 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Offers - Nona Beauty</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Admin Dashboard - Nona Beauty</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .offers-page {
-            min-height: 100vh;
-            padding: 40px 0;
-        }
+    <script src="assets/js/helpers.js" defer></script>
+    <script src="assets/js/translations.js" defer></script>
+    <script src="assets/js/config.js" defer></script>
+</head>
+<body>
 
-        .page-hero {
-            background: linear-gradient(135deg, rgba(214, 51, 132, 0.9), rgba(111, 66, 193, 0.9));
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-            margin-bottom: 40px;
-        }
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try{
+    var u = (window.Auth && window.Auth.getUser) ? window.Auth.getUser() : { type: localStorage.getItem('userType') };
+    if(!u || u.type !== 'admin'){
+      alert('غير مصرح. يجب تسجيل الدخول كأدمن.');
+      location.href = 'login.html';
+    }
+  }catch(e){ console.error(e); }
+});
+</script>
 
-        .page-hero h1 {
-            font-size: 42px;
-            margin-bottom: 15px;
-        }
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try{
+    var user = safeGet('nonaBeautyUser');
+    if(!user || !user.role || user.role !== 'admin'){
+      window.location.replace('index.html');
+    }
+  }catch(e){
+    console.error('admin guard', e);
+    window.location.replace('index.html');
+  }
+});
+</script>
 
-        .page-hero p {
-            font-size: 18px;
-            opacity: 0.9;
-        }
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/images/general/logo.png" alt="Admin Dashboard" class="admin-logo">
+                <h2>Admin Dashboard</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#products" class="nav-link">
+                            <i class="fas fa-box"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#categories" class="nav-link">
+                            <i class="fas fa-tags"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#orders" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#customers" class="nav-link">
+                            <i class="fas fa-users"></i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#offers" class="nav-link">
+                            <i class="fas fa-percentage"></i>
+                            <span>Offers & Discounts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#blog" class="nav-link">
+                            <i class="fas fa-blog"></i>
+                            <span>Blog & Tips</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-        .offers-banner {
-            margin-bottom: 40px;
-        }
+            <div class="sidebar-footer">
+                <a href="index.html" class="back-to-store">
+                    <i class="fas fa-store"></i>
+                    <span>Back to Store</span>
+                </a>
+            </div>
+        </aside>
 
-        .offer-banner-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            color: white;
-            box-shadow: var(--shadow);
-        }
+        <!-- Main Content -->
+        <main>
+            <div id="admin-content" class="main-content">
+                <!-- Header -->
+                <header class="admin-header">
+                    <div class="header-left">
+                        <button class="sidebar-toggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <h1 id="pageTitle">Dashboard</h1>
+                    </div>
+                    
+                    <div class="header-right">
+                        <div class="admin-search">
+                            <input type="text" placeholder="Search..." id="adminSearch">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        
+                        <div class="admin-profile">
+                            <div class="profile-dropdown">
+                                <img src="assets/images/general/admin-avatar.jpg" alt="Admin" class="profile-img">
+                                <span>Admin User</span>
+                                <i class="fas fa-chevron-down"></i>
+                                
+                                <div class="dropdown-menu">
+                                    <a href="#profile"><i class="fas fa-user"></i> Profile</a>
+                                    <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                                    <a href="#" id="adminLogout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
 
-        .banner-content {
-            padding: 40px;
-            flex: 1;
-        }
+                <!-- Content Area -->
+                <div class="content-area">
+                    <!-- Dashboard Page -->
+                    <section id="dashboard" class="page active">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon sales">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Sales</h3>
+                                    <span class="stat-number">$12,458</span>
+                                    <span class="stat-change positive">+12%</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orders">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Orders</h3>
+                                    <span class="stat-number">156</span>
+                                    <span class="stat-change positive">+8%</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon customers">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Customers</h3>
+                                    <span class="stat-number">2,458</span>
+                                    <span class="stat-change positive">+15%</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon products">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Total Products</h3>
+                                    <span class="stat-number">89</span>
+                                    <span class="stat-change positive">+5%</span>
+                                </div>
+                            </div>
+                        </div>
 
-        .banner-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
+                        <div class="charts-section">
+                            <div class="chart-card">
+                                <h3>Sales Overview</h3>
+                                <div class="chart-container">
+                                    <canvas id="salesChart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-card">
+                                <h3>Top Selling Products</h3>
+                                <div class="top-products" id="topProducts">
+                                    <div class="product-rank">
+                                        <span class="rank">1</span>
+                                        <div class="product-info">
+                                            <span class="product-name">Hydrating Face Serum</span>
+                                            <span class="product-sales">89 sales</span>
+                                        </div>
+                                        <span class="product-revenue">$31,150</span>
+                                    </div>
+                                    <div class="product-rank">
+                                        <span class="rank">2</span>
+                                        <div class="product-info">
+                                            <span class="product-name">Sulfate-Free Shampoo</span>
+                                            <span class="product-sales">76 sales</span>
+                                        </div>
+                                        <span class="product-revenue">$12,920</span>
+                                    </div>
+                                    <div class="product-rank">
+                                        <span class="rank">3</span>
+                                        <div class="product-info">
+                                            <span class="product-name">Floral Elegance Perfume</span>
+                                            <span class="product-sales">64 sales</span>
+                                        </div>
+                                        <span class="product-revenue">$25,600</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-        .banner-content h3 {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
+                        <div class="recent-activity">
+                            <h3>Recent Orders</h3>
+                            <div class="activity-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentOrdersTable">
+                                        <tr>
+                                            <td>ORD-001</td>
+                                            <td>John Doe</td>
+                                            <td>2024-01-15</td>
+                                            <td>$156.00</td>
+                                            <td><span class="status-badge status-delivered">Delivered</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">View</button>
+                                                <button class="btn btn-sm btn-secondary">Edit</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ORD-002</td>
+                                            <td>Sarah Smith</td>
+                                            <td>2024-01-14</td>
+                                            <td>$89.50</td>
+                                            <td><span class="status-badge status-shipped">Shipped</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">View</button>
+                                                <button class="btn btn-sm btn-secondary">Edit</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
 
-        .banner-image {
-            flex: 1;
-            height: 300px;
-        }
+                    <!-- Products Management Page -->
+                    <section id="products" class="page">
+                        <div class="page-header">
+                            <h2>Products Management</h2>
+                            <button class="btn btn-primary" id="addProductBtn">
+                                <i class="fas fa-plus"></i>
+                                Add New Product
+                            </button>
+                        </div>
 
-        .banner-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+                        <div class="products-management">
+                            <div class="products-filters">
+                                <select id="categoryFilter">
+                                    <option value="all">All Categories</option>
+                                    <option value="hair">Hair Care</option>
+                                    <option value="face">Skin Care</option>
+                                    <option value="lips">Lip Products</option>
+                                    <option value="body">Body Care</option>
+                                    <option value="perfumes">Perfumes</option>
+                                </select>
+                                
+                                <select id="statusFilter">
+                                    <option value="all">All Status</option>
+                                    <option value="inStock">In Stock</option>
+                                    <option value="outOfStock">Out of Stock</option>
+                                    <option value="onSale">On Sale</option>
+                                </select>
+                                
+                                <button class="btn btn-secondary" id="exportProducts">
+                                    <i class="fas fa-download"></i>
+                                    Export
+                                </button>
+                            </div>
 
-        .current-offers {
-            margin-bottom: 60px;
-        }
+                            <div class="products-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product Name</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Discount</th>
+                                            <th>Stock</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productsTable">
+                                        <tr>
+                                            <td>
+                                                <img src="https://images.unsplash.com/photo-1625772299848-391b6a87d5b6?w=100" alt="Shampoo" class="product-image-small">
+                                            </td>
+                                            <td>Sulfate-Free Shampoo</td>
+                                            <td>Hair Care</td>
+                                            <td>$170</td>
+                                            <td>15%</td>
+                                            <td>45</td>
+                                            <td><span class="status-badge status-in-stock">In Stock</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
 
-        .offers-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+                    <!-- Categories Page -->
+                    <section id="categories" class="page">
+                        <div class="page-header">
+                            <h2>Categories Management</h2>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Add New Category
+                            </button>
+                        </div>
+                        <div class="categories-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Category Name</th>
+                                        <th>Product Count</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="categoriesTable">
+                                    <!-- Categories will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
 
-        .offers-filter {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+                    <!-- Additional pages can be added here -->
+                </div>
+            </div>
+        </main>
+    </div>
 
-        .filter-btn {
-            padding: 10px 20px;
-            border: 2px solid var(--primary-color);
-            background: transparent;
-            color: var(--primary-color);
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
+    <!-- Modals -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Product</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Category</label>
+                        <select id="productCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="hair">Hair Care</option>
+                            <option value="face">Skin Care</option>
+                            <option value="lips">Lip Products</option>
+                            <option value="body">Body Care</option>
+                            <option value="perfumes">Perfumes</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productPrice">Price</label>
+                            <input type="number" id="productPrice" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock">Stock</label>
+                            <input type="number" id="productStock" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary cancel-btn">Cancel</button>
+                <button class="btn btn-primary" id="saveProduct">Save Product</button>
+            </div>
+        </div>
+    </div>
 
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .limited-offers {
-            margin-bottom: 60px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .countdown-timer {
-            display: flex;
-            gap: 15px;
-        }
-
-        .timer-item {
-            text-align: center;
-            background: var(--white);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            min-width: 80px;
-        }
-
-        .timer-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-color);
-            display: block;
-        }
-
-        .timer-label {
-            font-size: 12px;
-            color: var(--muted-text);
-            text-transform: uppercase;
-        }
-
-        .limited-products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .bundle-deals {
-            margin-bottom: 60px;
-        }
-
-        .bundles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-        }
-
-        .bundle-card {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            display: flex;
-            transition: var(--transition);
-        }
-
-        .bundle-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-
-        .bundle-image {
-            width: 150px;
-            height: 200px;
-        }
-
-        .bundle-image img {
-            width: 100
+    <script src="assets/js/admin.js"></script>
+    <script src="assets/js/admin-enhanced.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
+</body>
+</html>
